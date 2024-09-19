@@ -1,1 +1,1 @@
-# Práctica 2 Visión por Computador
+# Práctica 2 de Visión por Computador
