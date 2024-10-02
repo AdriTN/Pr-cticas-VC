@@ -68,9 +68,9 @@ Esta comparación refleja cómo ambos operadores detectan bordes de manera disti
 En esta tarea, se desarrolló un demostrador interactivo utilizando la cámara web del sistema para capturar imágenes en tiempo real y aplicar diferentes técnicas de procesamiento de imágenes que hemos trabajado en las prácticas. El objetivo principal es mostrar el procesamiento de imágenes de manera didáctica, a través de varios modos de visualización que permiten cambiar entre diferentes técnicas de procesamiento de imagen utilizando OpenCV.
 
 ### 2.4.1. Descripción del Proceso
-1.Inicialización de la cámara y configuración del eliminador de fondo: El sistema se inicia accediendo a la cámara del ordenador usando cv2.VideoCapture(0), lo que permite capturar imágenes en tiempo real. También se utiliza un eliminador de fondo mediante cv2.createBackgroundSubtractorMOG2(), que genera un modelo del fondo y lo separa de los objetos en movimiento.
+1. **Inicialización de la cámara y configuración del eliminador de fondo:** El sistema se inicia accediendo a la cámara del ordenador usando cv2.VideoCapture(0), lo que permite capturar imágenes en tiempo real. También se utiliza un eliminador de fondo mediante cv2.createBackgroundSubtractorMOG2(), que genera un modelo del fondo y lo separa de los objetos en movimiento.
 
-2.Modos de visualización: Se han implementado diferentes modos de visualización que permiten cambiar dinámicamente entre diversas técnicas de procesamiento de imágenes:
+2. **Modos de visualización:** Se han implementado diferentes modos de visualización que permiten cambiar dinámicamente entre diversas técnicas de procesamiento de imágenes:
 
 - Modo Diferencia de Fondo: Utiliza el eliminador de fondo para resaltar objetos en movimiento eliminando el fondo estático.
 - Modo Diferencia con el Fotograma Anterior: Compara el fotograma actual con el anterior usando la función cv2.absdiff(), lo que permite identificar diferencias entre dos fotogramas consecutivos.
