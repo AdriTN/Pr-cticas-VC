@@ -1,6 +1,6 @@
 # Práctica 2 de Visión por Computador.
 
-Este proyecto aborda técnicas de procesamiento de imágenes utilizando OpenCV en python. El enfoque principal de la práctica está en eñ análisis de bordes y la transformación de imágenes en escala de grises para extraer información visual relevante. Se aplican operadores como el filtro Canny para detectar contornos y analizar la distribución de píxeles en la imagen.
+Este proyecto aborda técnicas de procesamiento de imágenes utilizando OpenCV en python. El enfoque principal de la práctica está en el análisis de bordes y la transformación de imágenes en escala de grises para extraer información visual relevante. Se aplican operadores como el filtro Canny para detectar contornos y analizar la distribución de píxeles en la imagen.
 
 ## 2.1. Objetivos.
 
