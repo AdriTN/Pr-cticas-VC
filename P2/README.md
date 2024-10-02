@@ -15,16 +15,16 @@ En esta primera tarea se realizó el conteo de píxeles blancos por cada fila en
 
 ### 2.2.1. Descripción delproceso.
 
-    1. **Lectura y conversión de la imagen:** Se cargó una imagen en formato BGR usando OpenCV y luego se convirtió a una imagen en escala de grises. Dicha conversión es indispensable para aplicar técnicas de detección de bordes.
-    2. **Detección de bordes con Canny:** Se utilizó el operador Canny para obtener los contornos de la imagen. Dicho operador genera una imagen binaria donde los píxeles correspondientes a los bordes tienen un valor de 255 (blanco) y el resto un valor de 0 (negro).
-    3. **Cuenta de píxeles blancos por fila:** PAra cada fila de la imagen resultante, se realizóla suma de los valores de los píxeles blancos (255). Esto permitió calcular el porcentaje de píxeles blancos por fila.
-    4. **Visualización:** Los resultados de la cuenta se graficaron utilizando Matplotlib para observar cómo se distribuyen los bordes a lo largo de las filas de la imagen ([Imagen 1](#Canny)). Además se determinaron las filas con mayor número de píxeles blancos y aquellas filas cuyo número de píxeles blancos supera el 95% del valor máximo.
+1. **Lectura y conversión de la imagen:** Se cargó una imagen en formato BGR usando OpenCV y luego se convirtió a una imagen en escala de grises. Dicha conversión es indispensable para aplicar técnicas de detección de bordes.
+2. **Detección de bordes con Canny:** Se utilizó el operador Canny para obtener los contornos de la imagen. Dicho operador genera una imagen binaria donde los píxeles correspondientes a los bordes tienen un valor de 255 (blanco) y el resto un valor de 0 (negro).
+3. **Cuenta de píxeles blancos por fila:** PAra cada fila de la imagen resultante, se realizóla suma de los valores de los píxeles blancos (255). Esto permitió calcular el porcentaje de píxeles blancos por fila.
+4. **Visualización:** Los resultados de la cuenta se graficaron utilizando Matplotlib para observar cómo se distribuyen los bordes a lo largo de las filas de la imagen ([Imagen 1](#Canny)). Además se determinaron las filas con mayor número de píxeles blancos y aquellas filas cuyo número de píxeles blancos supera el 95% del valor máximo.
 
 ### 2.2.2. Resultados.
 
-    + **Fila con el mayor número de píxeles blancos:** Se identificó la fila con la mayor concentración de bordes detectados por el operador Canny.
-    + **Visualización de distribución de bordes por filas:** El gráfico ([Imagen 1](#Canny)) resultante muestra la distribución porcentual de píxeles blancos a lo largo de las filas de la imagen.
-    + **Detección de filas significativas:** Se identificaron las filas deonde el número de píxeles blancos supera el 95% del valor máximos.
++ **Fila con el mayor número de píxeles blancos:** Se identificó la fila con la mayor concentración de bordes detectados por el operador Canny.
++ **Visualización de distribución de bordes por filas:** El gráfico ([Imagen 1](#Canny)) resultante muestra la distribución porcentual de píxeles blancos a lo largo de las filas de la imagen.
++ **Detección de filas significativas:** Se identificaron las filas deonde el número de píxeles blancos supera el 95% del valor máximos.
 
 <a name="Canny"></a>
 ![**Imagen 1.** Imagen procesada con el operador Canny y representación de píxeles blanco por fila.](/P2/assets/Canny.jpg)
