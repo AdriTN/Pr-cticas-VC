@@ -65,10 +65,41 @@ Esta comparación refleja cómo ambos operadores detectan bordes de manera disti
 ![**Imagen 3.** Comparativa gráfica de Sobel frente a Canny.](/P2/assets/Comparativa.jpg)
 
 ## 2.4. Tarea 3: Proponer un demostrador que capture las imágenes de la cámara, y les permita exhibir lo aprendido en estas dos prácticas ante quienes no cursen la asignatura :). Es por ello que además de poder mostrar la imagen original de la webcam, incluya al menos dos usos diferentes de aplicar las funciones de OpenCV trabajadas hasta ahora.
+En esta tarea, se desarrolló un demostrador interactivo utilizando la cámara web del sistema para capturar imágenes en tiempo real y aplicar diferentes técnicas de procesamiento de imágenes que hemos trabajado en las prácticas. El objetivo principal es mostrar el procesamiento de imágenes de manera didáctica, a través de varios modos de visualización que permiten cambiar entre diferentes técnicas de procesamiento de imagen utilizando OpenCV.
+
+### 2.4.1. Descripción del Proceso
+Inicialización de la cámara y configuración del eliminador de fondo: El sistema se inicia accediendo a la cámara del ordenador usando cv2.VideoCapture(0), lo que permite capturar imágenes en tiempo real. También se utiliza un eliminador de fondo mediante cv2.createBackgroundSubtractorMOG2(), que genera un modelo del fondo y lo separa de los objetos en movimiento.
+
+Modos de visualización: Se han implementado diferentes modos de visualización que permiten cambiar dinámicamente entre diversas técnicas de procesamiento de imágenes:
+
+- Modo Diferencia de Fondo: Utiliza el eliminador de fondo para resaltar objetos en movimiento eliminando el fondo estático.
+- Modo Diferencia con el Fotograma Anterior: Compara el fotograma actual con el anterior usando la función cv2.absdiff(), lo que permite identificar diferencias entre dos fotogramas consecutivos.
+- Modo Espejado: Refleja horizontalmente el fotograma capturado con cv2.flip().
+- Modo Escala de Grises: Convierte el fotograma actual a escala de grises mediante cv2.cvtColor().
+- Modo Fondo: Muestra el fondo generado por el eliminador de fondo, útil para observar cómo el algoritmo modela la escena estática.
+- Modo Normal: Muestra la imagen original capturada por la cámara sin modificaciones.
+
+Interfaz del menú: En cada fotograma, se superpone un menú de texto que guía al usuario sobre las teclas disponibles para cambiar entre los diferentes modos de visualización. El menú incluye instrucciones para alternar entre los modos y salir del programa, lo que mejora la interactividad del demostrador.
+
+### 2.4.2. Resultados
+El demostrador permite al usuario observar en tiempo real cómo los diferentes algoritmos de procesamiento de imágenes modifican la visualización de la cámara. Las técnicas aplicadas incluyen eliminación de fondo, detección de diferencias entre fotogramas, espejado y conversión a escala de grises, las cuales son útiles para entender cómo se puede manipular y analizar la información visual de una cámara.
+
+A continuación, se listan algunos de los resultados destacados:
+
+Modo Diferencia de Fondo
+![**Imagen 4.** Resultado modo diferencia de fondo.](/P2/assets/diferencia_de_fondo.jpg)
+Modo Diferencia con el Fotograma Anterior
+![**Imagen 5.** Resultado modo diferencia anterior.](/P2/assets/diferencia_anterior.jpg)
+Modo Espejado
+Modo Escala de Grises
+![**Imagen 7.** Resultado modo diferencia de fondo.](/P2/assets/escala_grises.jpg)
+
+Este demostrador ofrece una plataforma interactiva que no solo ilustra los conceptos teóricos aprendidos en las prácticas, sino que también puede ser utilizada para presentaciones, demostraciones en tiempo real o proyectos creativos relacionados con la visión por computador.
 
 
+## 2.5.Tarea 4: Tras ver los vídeos My little piece of privacy, Messa di voce y Virtual air guitar proponer un demostrador reinterpretando la parte de procesamiento de la imagen, tomando como punto de partida alguna de dichas instalaciones.
 
-## 2.5. Ampliación:
+## 2.6. Ampliación:
 
 
 
