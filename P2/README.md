@@ -4,10 +4,10 @@ Este proyecto aborda técnicas de procesamiento de imágenes utilizando OpenCV e
 
 ## 2.1. Objetivos.
 
-    1. Aprender a cargar y manipular imágenes con OpenCV.
-    2. Aplicar técnicas de conversión de imágenes a escala de grises.
-    3. Implementar la detección de bordes con el operador Canny.
-    4. Visualizar los resultados del análisis de bordes utilizando gráficos de distribución de píxeles.
+1. Aprender a cargar y manipular imágenes con OpenCV.
+2. Aplicar técnicas de conversión de imágenes a escala de grises.
+3. Implementar la detección de bordes con el operador Canny.
+4. Visualizar los resultados del análisis de bordes utilizando gráficos de distribución de píxeles.
 
 ## 2.2. Tarea 1: Realiza la cuenta de píxeles blancos por filas (en lugar de por columnas). Determinar el máximo para filas y columnas (uno para cada). Muestra el número de filas con un número de píxeles blancos mayor o igual que 0.95*máximo.
 
