@@ -87,17 +87,35 @@ El demostrador permite al usuario observar en tiempo real cómo los diferentes a
 A continuación, se listan algunos de los resultados destacados:
 
 Modo Diferencia de Fondo
-![**Imagen 4.** Resultado modo diferencia de fondo.](/P2/assets/diferencia_de_fondo.jpg)
+![**Imagen 4.** Resultado modo diferencia de fondo.](/P2/assets/diferencia_de_fondo.png)
 Modo Diferencia con el Fotograma Anterior
-![**Imagen 5.** Resultado modo diferencia anterior.](/P2/assets/diferencia_anterior.jpg)
+![**Imagen 5.** Resultado modo diferencia anterior.](/P2/assets/Diferencia_anterior.png)
 Modo Espejado
+![**Imagen 6.** Resultado modo diferencia de fondo.](/P2/assets/image2.png)
 Modo Escala de Grises
-![**Imagen 7.** Resultado modo diferencia de fondo.](/P2/assets/escala_grises.jpg)
+![**Imagen 7.** Resultado modo diferencia de fondo.](/P2/assets/image.png)
 
 Este demostrador ofrece una plataforma interactiva que no solo ilustra los conceptos teóricos aprendidos en las prácticas, sino que también puede ser utilizada para presentaciones, demostraciones en tiempo real o proyectos creativos relacionados con la visión por computador.
 
-
 ## 2.5.Tarea 4: Tras ver los vídeos My little piece of privacy, Messa di voce y Virtual air guitar proponer un demostrador reinterpretando la parte de procesamiento de la imagen, tomando como punto de partida alguna de dichas instalaciones.
+Para esta tarea, se diseñó un demostrador inspirado en las obras audiovisuales mencionadas, integrando procesamiento de imágenes en tiempo real y una interfaz interactiva que permite detectar objetos de un color específico en la imagen capturada por una cámara web. Este demostrador utiliza técnicas de visión por computador para detectar color y dibujar líneas dinámicas que conectan los objetos detectados en la imagen, creando una interacción visual similar a las instalaciones mencionadas.
+
+### 2.5.1. Descripción del Proceso
+Captura de vídeo en tiempo real: El sistema comienza capturando vídeo en tiempo real desde la cámara web del dispositivo utilizando cv2.VideoCapture(0). Esta captura es el punto de partida para aplicar la detección de color y los efectos visuales interactivos.
+
+Selector de color personalizado: Se implementó un panel de control en la ventana del sistema que permite seleccionar dinámicamente el color que se utilizará para las líneas. Este panel, gestionado por trackbars de OpenCV, permite al usuario ajustar los valores de los canales BGR para cambiar el color de las líneas que conectan los objetos detectados. Esto hace que la interacción visual sea más creativa y flexible, similar a las instalaciones artísticas.
+
+Detección de objetos de color azul: El algoritmo convierte cada frame de la webcam al espacio de color HSV, y luego utiliza una máscara que resalta los objetos dentro del rango de color azul definido. La elección del color azul se basa en la facilidad de detección en diferentes entornos, pero podría modificarse para detectar otros colores si se requiere. Los contornos de los objetos azules se detectan con cv2.findContours(), y se dibujan rectángulos alrededor de ellos en la imagen.
+
+Conexión de objetos con líneas dinámicas: Después de detectar los objetos de color azul, el sistema calcula el centro de cada rectángulo delimitador y dibuja líneas que conectan estos centros en tiempo real. Las líneas se dibujan utilizando el color seleccionado por el usuario desde las trackbars, añadiendo una capa de personalización a la visualización interactiva.
+
+Almacenamiento de las líneas fijas: Una característica adicional permite al usuario "guardar" las líneas que conectan los objetos presionando la tecla 's'. Estas líneas se mantienen fijas en la pantalla, lo que crea una visualización más artística y similar a las instalaciones de arte mencionadas. Las líneas almacenadas se dibujan continuamente en cada frame hasta que el programa termina.
+
+Interactividad y control en tiempo real: El usuario puede cambiar el color de las líneas dinámicamente utilizando las trackbars y también puede detener el programa en cualquier momento presionando la tecla ESC. Esta interacción en tiempo real recuerda las características interactivas de las instalaciones vistas, donde los usuarios pueden influir directamente en el resultado visual.
+
+### 2.5.2. Resultados
+El demostrador final proporciona una experiencia visual interactiva en la que el usuario puede observar cómo los objetos de color azul en la escena se detectan y se conectan mediante líneas. Esta representación gráfica dinámica, que conecta diferentes objetos y permite la selección de colores, se asemeja a las interacciones artísticas de las obras My little piece of privacy y Messa di voce, donde el procesamiento en tiempo real de los elementos visuales es clave para generar una experiencia estética inmersiva.
+![**Imagen 8.** Resultado modo diferencia de fondo.](/P2/assets/dibujo.png)
 
 ## 2.6. Ampliación:
 
