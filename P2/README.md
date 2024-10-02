@@ -38,8 +38,11 @@ En esta segunda tarea, se aplicó el operador de Sobel a una imagen en escala de
 1. **Aplicación del operador Sobel:** Se utilizaron los filtros Sobel en las direcciones X e Y para detectar bordes en la imagen. La magnitud de los gradientes se calculó combinando ambas direcciones.
 2. **Umbralización:** La imagen obtenida con Sobel fue binarizada utilizando un umbral fijo de 127, lo que nos permitió convertir la magnitud del gradiente a una imagen binaria (valores 0 o 255).
 3. **Cálculo de píxeles blancos:** Se realizó el conteo de los píxeles blancos en la imagen umbralizada tanto por filas como por columnas.
-4. **Determinación de filas y columnas por encima del 95% del máximo:** Se identificaron las filas y columnas que contienen un número de píxeles blancos superior al 95% del valor máximo.
+4. **Determinación de filas y columnas por encima del 95% del máximo:** Se identificaron las filas y columnas que contienen un número de píxeles blancos superior al 95% del valor máximo ([Imagen 3](#Sobel)).
 5. **Marcado gráfico:** Para destacar las filas y columnas relevantes, se sobreimpusieron colores sobre la imagen original en las posiciones donde el número de píxeles blancos era superior al 95% del máximo (rojo para filas y verde para columnas).
+
+<a name="Sobel"></a>
+![**Imagen 2.** Comparativa gráfica de Sobel frente a Canny.](/P2/assets/MaxSobel.jpg)
 
 ### 2.3.2. Comparación de Sobel y Canny
 
@@ -47,7 +50,7 @@ En esta segunda tarea, se aplicó el operador de Sobel a una imagen en escala de
 
 + **Operador Canny:** En contraste, Canny es más eficaz en la detección de bordes finos y está diseñado para minimizar el ruido en la imagen. Utiliza un proceso de detección más sofisticado que involucra suavizado gaussiano y eliminación de no máximos, lo que genera una representación más precisa de los bordes.
 
-En la comparación gráfica ([Imagen 2](#Comparación)), se puede observar que:
+En la comparación gráfica ([Imagen 3](#Comparación)), se puede observar que:
 
 + La respuesta de **Sobel** presenta más variación en los bordes detectados por filas y columnas, siendo más robusta en zonas donde hay gradientes suaves.
 + La respuesta de **Canny** es más precisa en los contornos finos, con una menor cantidad de ruido en la detección de bordes.
@@ -59,4 +62,4 @@ A continuación se muestra una visualización de las comparaciones de Sobel y Ca
 Esta comparación refleja cómo ambos operadores detectan bordes de manera distinta y nos da una idea de cómo elegir el operador adecuado dependiendo de las características de la imagen y de los detalles que se quieran resaltar.
 
 <a name="Comparación"></a>
-![**Imagen 2.** Comparativa gráfica de Sobel frente a Canny.](/P2/assets/Comparativa.jpg)
+![**Imagen 3.** Comparativa gráfica de Sobel frente a Canny.](/P2/assets/Comparativa.jpg)
