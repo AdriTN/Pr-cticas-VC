@@ -63,3 +63,13 @@ Esta comparación refleja cómo ambos operadores detectan bordes de manera disti
 
 <a name="Comparación"></a>
 ![**Imagen 3.** Comparativa gráfica de Sobel frente a Canny.](/P2/assets/Comparativa.jpg)
+
+## 2.4. Tarea 3: Proponer un demostrador que capture las imágenes de la cámara, y les permita exhibir lo aprendido en estas dos prácticas ante quienes no cursen la asignatura :). Es por ello que además de poder mostrar la imagen original de la webcam, incluya al menos dos usos diferentes de aplicar las funciones de OpenCV trabajadas hasta ahora.
+
+
+
+## 2.5. Ampliación:
+
+
+
+## Desarrollado por: Adrián Talavera Naranjo y Arhamis Gutiérrez Caballero.
