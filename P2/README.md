@@ -72,12 +72,12 @@ En esta tarea, se desarrolló un demostrador interactivo utilizando la cámara w
 
 2. **Modos de visualización:** Se han implementado diferentes modos de visualización que permiten cambiar dinámicamente entre diversas técnicas de procesamiento de imágenes:
 
-- Modo Diferencia de Fondo: Utiliza el eliminador de fondo para resaltar objetos en movimiento eliminando el fondo estático.
-- Modo Diferencia con el Fotograma Anterior: Compara el fotograma actual con el anterior usando la función cv2.absdiff(), lo que permite identificar diferencias entre dos fotogramas consecutivos.
-- Modo Espejado: Refleja horizontalmente el fotograma capturado con cv2.flip().
-- Modo Escala de Grises: Convierte el fotograma actual a escala de grises mediante cv2.cvtColor().
-- Modo Fondo: Muestra el fondo generado por el eliminador de fondo, útil para observar cómo el algoritmo modela la escena estática.
-- Modo Normal: Muestra la imagen original capturada por la cámara sin modificaciones.
+- **Modo Diferencia de Fondo:** Utiliza el eliminador de fondo para resaltar objetos en movimiento eliminando el fondo estático.
+- **Modo Diferencia con el Fotograma Anterior:** Compara el fotograma actual con el anterior usando la función cv2.absdiff(), lo que permite identificar diferencias entre dos fotogramas consecutivos.
+- **Modo Espejado:** Refleja horizontalmente el fotograma capturado con cv2.flip().
+- **Modo Escala de Grises:** Convierte el fotograma actual a escala de grises mediante cv2.cvtColor().
+- **Modo Fondo:** Muestra el fondo generado por el eliminador de fondo, útil para observar cómo el algoritmo modela la escena estática.
+- **Modo Normal:** Muestra la imagen original capturada por la cámara sin modificaciones.
 
 3.Interfaz del menú: En cada fotograma, se superpone un menú de texto que guía al usuario sobre las teclas disponibles para cambiar entre los diferentes modos de visualización. El menú incluye instrucciones para alternar entre los modos y salir del programa, lo que mejora la interactividad del demostrador.
 
