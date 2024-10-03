@@ -94,7 +94,7 @@ A continuación, se listan algunos de los resultados destacados:
 - #### Modo Espejado
 ![**Imagen 6.** Resultado modo diferencia de fondo.](/P2/assets/image2.png)
 - #### Modo Escala de Grises
-![**Imagen 7.** Resultado modo diferencia de fondo.](/P2/assets/image.png)
+![**Imagen 7.** Resultado modo escala de grises.](/P2/assets/image.png)
 
 Este demostrador ofrece una plataforma interactiva que no solo ilustra los conceptos teóricos aprendidos en las prácticas, sino que también puede ser utilizada para presentaciones, demostraciones en tiempo real o proyectos creativos relacionados con la visión por computador.
 
@@ -117,7 +117,7 @@ Para esta tarea, se diseñó un demostrador inspirado en las obras audiovisuales
 ### 2.5.2. Resultados
 El demostrador final proporciona una experiencia visual interactiva en la que el usuario puede observar cómo los objetos de color azul en la escena se detectan y se conectan mediante líneas. Esta representación gráfica dinámica, que conecta diferentes objetos y permite la selección de colores, se asemeja a las interacciones artísticas de las obras My little piece of privacy y Messa di voce, donde el procesamiento en tiempo real de los elementos visuales es clave para generar una experiencia estética inmersiva.
 
-![**Imagen 8.** Resultado modo diferencia de fondo.](/P2/assets/dibujo.png)
+![**Imagen 8.** Resultado dibujo.](/P2/assets/dibujo.png)
 
 ## 2.6. Ampliación:Implementación de un sistema de detección de movimiento en tiempo real con captura automática.
 En esta tarea se ha implementado un sistema que detecta movimiento en tiempo real utilizando la cámara del sistema y, cuando se detecta movimiento, guarda una captura de pantalla automáticamente. Se utiliza OpenCV para el procesamiento de video y la detección de movimiento, y se integran técnicas vistas anteriormente, como el eliminador de fondo y la diferencia de fotogramas.
@@ -136,6 +136,10 @@ En esta tarea se ha implementado un sistema que detecta movimiento en tiempo rea
 ### 2.6.3. Resultados
 Este sistema permite visualizar en tiempo real cualquier movimiento capturado por la cámara y generar capturas automáticas cuando se detecta un cambio significativo. Las capturas se guardan con nombres únicos, facilitando su almacenamiento. Esta tarea refuerza el uso de técnicas avanzadas como el eliminador de fondo, la detección de diferencias y la captura de fotogramas, haciendo que el sistema sea útil tanto para demostraciones didácticas como para aplicaciones prácticas en seguridad o monitoreo.
 
+**Foto del sistema de detección de movimiento**:
+![**Imagen 9.** Sistema detección de movimiento.](/P2/assets/captura_movimiento.jpg)
+
+
 ## 2.7. Ampliación:Sistema de detección de movimiento con cuenta regresiva para selfies automáticas
 En esta tarea se ha implementado un sistema de detección de movimiento que toma una selfie automática cuando se detecta actividad en la cámara. El sistema realiza una cuenta regresiva de tres segundos antes de capturar la imagen. La detección se realiza utilizando OpenCV, aprovechando el eliminador de fondo y la comparación de fotogramas consecutivos.
 
@@ -150,7 +154,12 @@ En esta tarea se ha implementado un sistema de detección de movimiento que toma
 
 5. **Interfaz visual:** El sistema muestra el video normal con la cuenta regresiva en caso de detección de movimiento, y permite la visualización de las diferencias entre fotogramas cuando hay actividad.
 
-### 2.6.3. Resultados
+### 2.7.2. Resultados
 Este sistema implementa una solución creativa para la detección de movimiento que toma selfies automáticas después de una cuenta regresiva, lo cual añade una capa interactiva al proyecto. Las capturas se guardan con nombres únicos y la cuenta regresiva se muestra en pantalla de forma visible, permitiendo al usuario prepararse antes de que se tome la foto. Este enfoque puede ser útil para aplicaciones de entretenimiento, seguridad, o para proyectos creativos en los que se requiera capturar momentos específicos tras detectar movimiento.
+
+**Foto automática**:
+
+![**Imagen 10.** Foto automática.](/P2/assets/captura_selfie.jpg)
+
 
 ## Desarrollado por: Adrián Talavera Naranjo y Arhamis Gutiérrez Caballero.
