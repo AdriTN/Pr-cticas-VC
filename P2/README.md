@@ -150,7 +150,7 @@ En esta tarea se ha implementado un sistema de detección de movimiento que toma
 
 5. **Interfaz visual:** El sistema muestra el video normal con la cuenta regresiva en caso de detección de movimiento, y permite la visualización de las diferencias entre fotogramas cuando hay actividad.
 
-### 2.6.3. Resultados
+### 2.7.2. Resultados
 Este sistema implementa una solución creativa para la detección de movimiento que toma selfies automáticas después de una cuenta regresiva, lo cual añade una capa interactiva al proyecto. Las capturas se guardan con nombres únicos y la cuenta regresiva se muestra en pantalla de forma visible, permitiendo al usuario prepararse antes de que se tome la foto. Este enfoque puede ser útil para aplicaciones de entretenimiento, seguridad, o para proyectos creativos en los que se requiera capturar momentos específicos tras detectar movimiento.
 
 ## Desarrollado por: Adrián Talavera Naranjo y Arhamis Gutiérrez Caballero.
