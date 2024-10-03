@@ -68,36 +68,56 @@ Esta comparación refleja cómo ambos operadores detectan bordes de manera disti
 En esta tarea, se desarrolló un demostrador interactivo utilizando la cámara web del sistema para capturar imágenes en tiempo real y aplicar diferentes técnicas de procesamiento de imágenes que hemos trabajado en las prácticas. El objetivo principal es mostrar el procesamiento de imágenes de manera didáctica, a través de varios modos de visualización que permiten cambiar entre diferentes técnicas de procesamiento de imagen utilizando OpenCV.
 
 ### 2.4.1. Descripción del Proceso
-Inicialización de la cámara y configuración del eliminador de fondo: El sistema se inicia accediendo a la cámara del ordenador usando cv2.VideoCapture(0), lo que permite capturar imágenes en tiempo real. También se utiliza un eliminador de fondo mediante cv2.createBackgroundSubtractorMOG2(), que genera un modelo del fondo y lo separa de los objetos en movimiento.
+1. **Inicialización de la cámara y configuración del eliminador de fondo:** El sistema se inicia accediendo a la cámara del ordenador usando cv2.VideoCapture(0), lo que permite capturar imágenes en tiempo real. También se utiliza un eliminador de fondo mediante cv2.createBackgroundSubtractorMOG2(), que genera un modelo del fondo y lo separa de los objetos en movimiento.
 
-Modos de visualización: Se han implementado diferentes modos de visualización que permiten cambiar dinámicamente entre diversas técnicas de procesamiento de imágenes:
+2. **Modos de visualización:** Se han implementado diferentes modos de visualización que permiten cambiar dinámicamente entre diversas técnicas de procesamiento de imágenes:
 
-- Modo Diferencia de Fondo: Utiliza el eliminador de fondo para resaltar objetos en movimiento eliminando el fondo estático.
-- Modo Diferencia con el Fotograma Anterior: Compara el fotograma actual con el anterior usando la función cv2.absdiff(), lo que permite identificar diferencias entre dos fotogramas consecutivos.
-- Modo Espejado: Refleja horizontalmente el fotograma capturado con cv2.flip().
-- Modo Escala de Grises: Convierte el fotograma actual a escala de grises mediante cv2.cvtColor().
-- Modo Fondo: Muestra el fondo generado por el eliminador de fondo, útil para observar cómo el algoritmo modela la escena estática.
-- Modo Normal: Muestra la imagen original capturada por la cámara sin modificaciones.
+- **Modo Diferencia de Fondo:** Utiliza el eliminador de fondo para resaltar objetos en movimiento eliminando el fondo estático.
+- **Modo Diferencia con el Fotograma Anterior:** Compara el fotograma actual con el anterior usando la función cv2.absdiff(), lo que permite identificar diferencias entre dos fotogramas consecutivos.
+- **Modo Espejado:** Refleja horizontalmente el fotograma capturado con cv2.flip().
+- **Modo Escala de Grises:** Convierte el fotograma actual a escala de grises mediante cv2.cvtColor().
+- **Modo Fondo:** Muestra el fondo generado por el eliminador de fondo, útil para observar cómo el algoritmo modela la escena estática.
+- **Modo Normal:** Muestra la imagen original capturada por la cámara sin modificaciones.
 
-Interfaz del menú: En cada fotograma, se superpone un menú de texto que guía al usuario sobre las teclas disponibles para cambiar entre los diferentes modos de visualización. El menú incluye instrucciones para alternar entre los modos y salir del programa, lo que mejora la interactividad del demostrador.
+3.Interfaz del menú: En cada fotograma, se superpone un menú de texto que guía al usuario sobre las teclas disponibles para cambiar entre los diferentes modos de visualización. El menú incluye instrucciones para alternar entre los modos y salir del programa, lo que mejora la interactividad del demostrador.
 
 ### 2.4.2. Resultados
 El demostrador permite al usuario observar en tiempo real cómo los diferentes algoritmos de procesamiento de imágenes modifican la visualización de la cámara. Las técnicas aplicadas incluyen eliminación de fondo, detección de diferencias entre fotogramas, espejado y conversión a escala de grises, las cuales son útiles para entender cómo se puede manipular y analizar la información visual de una cámara.
 
 A continuación, se listan algunos de los resultados destacados:
 
-Modo Diferencia de Fondo
-![**Imagen 4.** Resultado modo diferencia de fondo.](/P2/assets/diferencia_de_fondo.jpg)
-Modo Diferencia con el Fotograma Anterior
-![**Imagen 5.** Resultado modo diferencia anterior.](/P2/assets/diferencia_anterior.jpg)
-Modo Espejado
-Modo Escala de Grises
-![**Imagen 7.** Resultado modo diferencia de fondo.](/P2/assets/escala_grises.jpg)
+- #### Modo Diferencia de Fondo
+![**Imagen 4.** Resultado modo diferencia de fondo.](/P2/assets/diferencia_de_fondo.png)
+
+- #### Modo Diferencia con el Fotograma Anterior
+![**Imagen 5.** Resultado modo diferencia anterior.](/P2/assets/Diferencia_anterior.png)
+- #### Modo Espejado
+![**Imagen 6.** Resultado modo diferencia de fondo.](/P2/assets/image2.png)
+- #### Modo Escala de Grises
+![**Imagen 7.** Resultado modo diferencia de fondo.](/P2/assets/image.png)
 
 Este demostrador ofrece una plataforma interactiva que no solo ilustra los conceptos teóricos aprendidos en las prácticas, sino que también puede ser utilizada para presentaciones, demostraciones en tiempo real o proyectos creativos relacionados con la visión por computador.
 
-
 ## 2.5.Tarea 4: Tras ver los vídeos My little piece of privacy, Messa di voce y Virtual air guitar proponer un demostrador reinterpretando la parte de procesamiento de la imagen, tomando como punto de partida alguna de dichas instalaciones.
+Para esta tarea, se diseñó un demostrador inspirado en las obras audiovisuales mencionadas, integrando procesamiento de imágenes en tiempo real y una interfaz interactiva que permite detectar objetos de un color específico en la imagen capturada por una cámara web. Este demostrador utiliza técnicas de visión por computador para detectar color y dibujar líneas dinámicas que conectan los objetos detectados en la imagen, creando una interacción visual similar a las instalaciones mencionadas.
+
+### 2.5.1. Descripción del Proceso
+1. **Captura de vídeo en tiempo real:** El sistema comienza capturando vídeo en tiempo real desde la cámara web del dispositivo utilizando cv2.VideoCapture(0). Esta captura es el punto de partida para aplicar la detección de color y los efectos visuales interactivos.
+
+2. **Selector de color personalizado:** Se implementó un panel de control en la ventana del sistema que permite seleccionar dinámicamente el color que se utilizará para las líneas. Este panel, gestionado por trackbars de OpenCV, permite al usuario ajustar los valores de los canales BGR para cambiar el color de las líneas que conectan los objetos detectados. Esto hace que la interacción visual sea más creativa y flexible, similar a las instalaciones artísticas.
+
+3. **Detección de objetos de color azul:** El algoritmo convierte cada frame de la webcam al espacio de color HSV, y luego utiliza una máscara que resalta los objetos dentro del rango de color azul definido. La elección del color azul se basa en la facilidad de detección en diferentes entornos, pero podría modificarse para detectar otros colores si se requiere. Los contornos de los objetos azules se detectan con cv2.findContours(), y se dibujan rectángulos alrededor de ellos en la imagen.
+
+4. **Conexión de objetos con líneas dinámicas:** Después de detectar los objetos de color azul, el sistema calcula el centro de cada rectángulo delimitador y dibuja líneas que conectan estos centros en tiempo real. Las líneas se dibujan utilizando el color seleccionado por el usuario desde las trackbars, añadiendo una capa de personalización a la visualización interactiva.
+
+5. **Almacenamiento de las líneas fijas:** Una característica adicional permite al usuario "guardar" las líneas que conectan los objetos presionando la tecla 's'. Estas líneas se mantienen fijas en la pantalla, lo que crea una visualización más artística y similar a las instalaciones de arte mencionadas. Las líneas almacenadas se dibujan continuamente en cada frame hasta que el programa termina.
+
+6. **Interactividad y control en tiempo real:** El usuario puede cambiar el color de las líneas dinámicamente utilizando las trackbars y también puede detener el programa en cualquier momento presionando la tecla ESC. Esta interacción en tiempo real recuerda las características interactivas de las instalaciones vistas, donde los usuarios pueden influir directamente en el resultado visual.
+
+### 2.5.2. Resultados
+El demostrador final proporciona una experiencia visual interactiva en la que el usuario puede observar cómo los objetos de color azul en la escena se detectan y se conectan mediante líneas. Esta representación gráfica dinámica, que conecta diferentes objetos y permite la selección de colores, se asemeja a las interacciones artísticas de las obras My little piece of privacy y Messa di voce, donde el procesamiento en tiempo real de los elementos visuales es clave para generar una experiencia estética inmersiva.
+
+![**Imagen 8.** Resultado modo diferencia de fondo.](/P2/assets/dibujo.png)
 
 ## 2.6. Ampliación:
 
