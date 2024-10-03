@@ -119,8 +119,38 @@ El demostrador final proporciona una experiencia visual interactiva en la que el
 
 ![**Imagen 8.** Resultado modo diferencia de fondo.](/P2/assets/dibujo.png)
 
-## 2.6. Ampliación:
+## 2.6. Ampliación:Implementación de un sistema de detección de movimiento en tiempo real con captura automática.
+En esta tarea se ha implementado un sistema que detecta movimiento en tiempo real utilizando la cámara del sistema y, cuando se detecta movimiento, guarda una captura de pantalla automáticamente. Se utiliza OpenCV para el procesamiento de video y la detección de movimiento, y se integran técnicas vistas anteriormente, como el eliminador de fondo y la diferencia de fotogramas.
 
+### 2.6.1. Descripción del Proceso
+1. **Inicialización de la cámara y el eliminador de fondo:** Se accede a la cámara del sistema usando cv2.VideoCapture(0) para capturar video en tiempo real. Se emplea cv2.createBackgroundSubtractorMOG2() para eliminar el fondo y resaltar los objetos en movimiento en la escena.
 
+2. **Detección de diferencias entre fotogramas:** En cada ciclo, se compara el fotograma actual con el anterior usando cv2.absdiff(). Esta diferencia se convierte a escala de grises y se aplica un umbral para identificar las áreas con cambios significativos en la imagen, lo que permite detectar el movimiento.
+
+3. **Detección de movimiento:** Si se detecta un cambio considerable entre dos fotogramas consecutivos (más de 5 millones de píxeles diferentes), el sistema interpreta que hay movimiento en la escena y muestra un mensaje visual en la ventana de video.
+
+4. **Captura de pantalla:** Cuando se detecta movimiento, el sistema guarda automáticamente una captura de pantalla de la escena en un archivo de imagen, que es nombrado de forma única usando la fecha y hora actuales.
+
+5. **Interfaz visual:** El sistema muestra dos ventanas: una con el video normal y otra con el video donde se destacan las áreas que han cambiado entre los fotogramas.
+
+### 2.6.3. Resultados
+Este sistema permite visualizar en tiempo real cualquier movimiento capturado por la cámara y generar capturas automáticas cuando se detecta un cambio significativo. Las capturas se guardan con nombres únicos, facilitando su almacenamiento. Esta tarea refuerza el uso de técnicas avanzadas como el eliminador de fondo, la detección de diferencias y la captura de fotogramas, haciendo que el sistema sea útil tanto para demostraciones didácticas como para aplicaciones prácticas en seguridad o monitoreo.
+
+## 2.7. Ampliación:Sistema de detección de movimiento con cuenta regresiva para selfies automáticas
+En esta tarea se ha implementado un sistema de detección de movimiento que toma una selfie automática cuando se detecta actividad en la cámara. El sistema realiza una cuenta regresiva de tres segundos antes de capturar la imagen. La detección se realiza utilizando OpenCV, aprovechando el eliminador de fondo y la comparación de fotogramas consecutivos.
+
+### 2.7.1. Descripción del Proceso
+1. **Inicialización de la cámara y el eliminador de fondo:** El sistema usa la cámara del dispositivo a través de cv2.VideoCapture(0) para capturar video en tiempo real. Se emplea cv2.createBackgroundSubtractorMOG2() para eliminar el fondo y detectar movimientos en la escena.
+   
+2. **Detección de diferencias entre fotogramas:** El sistema compara el fotograma actual con el anterior utilizando cv2.absdiff(). Esta diferencia es procesada para identificar cambios significativos, lo que permite detectar cuando algo o alguien se mueve en la imagen.
+
+3. **Detección de movimiento:** Si la diferencia entre fotogramas es suficientemente grande (más de 5 millones de píxeles diferentes), el sistema reconoce que ha habido movimiento. En ese caso, se inicia una cuenta regresiva de tres segundos para tomar una selfie.
+
+4. **Captura de pantalla con cuenta regresiva:** Una vez detectado el movimiento, se muestra una cuenta regresiva en la pantalla durante 3 segundos. Al finalizar, el sistema guarda automáticamente una captura de pantalla del momento, nombrando el archivo de forma única con la fecha y hora actuales.
+
+5. **Interfaz visual:** El sistema muestra el video normal con la cuenta regresiva en caso de detección de movimiento, y permite la visualización de las diferencias entre fotogramas cuando hay actividad.
+
+### 2.6.3. Resultados
+Este sistema implementa una solución creativa para la detección de movimiento que toma selfies automáticas después de una cuenta regresiva, lo cual añade una capa interactiva al proyecto. Las capturas se guardan con nombres únicos y la cuenta regresiva se muestra en pantalla de forma visible, permitiendo al usuario prepararse antes de que se tome la foto. Este enfoque puede ser útil para aplicaciones de entretenimiento, seguridad, o para proyectos creativos en los que se requiera capturar momentos específicos tras detectar movimiento.
 
 ## Desarrollado por: Adrián Talavera Naranjo y Arhamis Gutiérrez Caballero.
