@@ -48,11 +48,41 @@ También se han creado funciones pertenecientes a la clase mencionada con el fin
 
 Cabe recalcar que la clase 'Moneda`está implementada de forma que sea posible usar cualquier tipo de moneda (por este motivo las funciones aceptan un parámetro), sin embargo, para esta práctica haremos uso de la moneda Europea.
 
-EXPLICAR AQUÍ LA PARTE DEL CUADERNO CORRESPONDIENTE A 'Procesar Imagen con Click'. EVITAR LA PARTE EN LA QUE SE ESCRIBE EN LA IMAGEN Y SE IMPRIME EL VALOR TOTAL
+Se ha creado una función llamada **click** para manejar los eventos de click del mouse que detecta cuando el usuario hace click en la imagen. Su objetivo es capturar las coordenadas del punto donde se realizó el click. Sus parametros son:
+- event (int): Tipo de evento.
+- x (int): Coordenada x del evento.
+- y (int): Coordenada y del evento.
+- flags (int): Flags del evento.
+- param (object): Parámetro adicional del evento.
+
+Esta función hace lo siguiente:
+1. Cuando el evento detecta un click izquierdo (cv2.EVENT_LBUTTONDOWN) guarda las coordenadas (x, y) en la variable global point
+2. Cierra la ventana que muestra la imagen usando cv2.destroyAllWindows().
+
+También se ha creado una función llamada **interaccion** que se encarga de procesar la imagen y permitir la interacción del usuario. Permite que el usuario seleccione una moneda haciendo click en la imagen y luego clasifica las monedas detectadas. Esta función hace lo siguiente: 
+1. Resetear la cantidad de monedas: Antes de procesar la imagen, resetea la cantidad de cada tipo de moneda usando el método **resetear_cantidad** de cada instancia de la clase Moneda.
+
+2. Cargar la imagen y detectar monedas:
+- La imagen es cargada desde la ruta proporcionada.
+- Dependiendo de si se ha especificado tipo_conteo="mejorado", la imagen se procesa utilizando la función **detectar_monedas_mejorado** o la función estándar **detectar_monedas**.
+
+3. Mostrar la imagen y esperar un click:
+- Se muestra la imagen procesada usando **cv2.imshow()**.
+- Se cambia el título de la ventana a "Haga click sobre la moneda de 1 EURO" para guiar al usuario.
+- La función **cv2.setMouseCallback** asocia la ventana con el manejador de eventos click, que capturará el punto seleccionado por el usuario.
+- La función espera hasta que se detecte un click con **cv2.waitKey(0)**.
+4. Validar que se hizo un click: Si el usuario no hace click, se lanza un error. Se verifica que point no sea None mediante assert.
+5. Determinar la moneda seleccionada:
+- Si el conteo es mejorado: Se recorren los bordes de los círculos detectados, verificando si el punto seleccionado por el usuario está dentro de alguno de los círculos (monedas).
+- Si el conteo no es mejorado: Se recorre cada contorno detectado, y se verifica si el punto seleccionado está dentro del radio del círculo que encierra el contorno. Luego se calcula el diámetro de la moneda seleccionada y se ajustan los rangos de tamaño de las monedas usando el método **calcular_rangos**.
+6. Clasificar las monedas:Según si se usa la versión mejorada o estándar, las monedas se clasifican con **clasificar_monedas_mejorado** o **clasificar_monedas**.
 
 ### 3.2.2. Mostrar en pantalla el número de monedas y la cantidad de dinero presente en la imagen.
-
-EXPLICAR AQUÍ LA PARTE DONDE SE ESCRIBE EN LA IMAGEN Y SE IMPRIME EL VALOR TOTAL.
+1. Mostrar el nombre de las monedas en la imagen:Se recorren las monedas clasificadas y se escribe su nombre y posición en la imagen usando **cv2.putText()**.
+2. Mostrar los resultados:
+- La función **Moneda.mostrar_monedas()** muestra una tabla con la información de cada tipo de moneda, incluyendo el valor y la cantidad detectada.
+- La imagen final, con los nombres de las monedas sobrepuestas, se muestra usando **mostrar_imagenes().**
+- Finalmente, se calcula el valor total de todas las monedas detectadas e imprime el resultado.
 
 ### 3.2.3. ¿Qué problemas se han encontrado?
 
