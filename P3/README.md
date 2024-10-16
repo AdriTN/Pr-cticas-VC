@@ -107,10 +107,10 @@ La función **extraerPropiedades** se encarga de calcular propiedades geométric
 Hemos creado la función **calcular_estadisticas** que calcula con np.max, np.mean y np.min y devuelve el valor máximo, mínimo y la media de las características pasadas
 ### 3.3.3 Procesamiento de imágenes
 Lo primero que hacemos es declarar las listas y diccionarios para tener una mejor estructura de código.
-**rutas_imagenes:** Esta lista contiene las rutas de las imágenes que se van a analizar. Se incluyen tres tipos de microplásticos: alquitran (TAR), fragmento (FRA) y pellet (PEL).
-**titulos_imagenes:** Esta lista contiene los títulos correspondientes a cada tipo de imagen, que se usarán para etiquetar las visualizaciones.
-**valores_umbral:** Este diccionario almacena umbrales específicos para cada imagen, que se utilizan para la binarización de la imagen. Los umbrales son valores de intensidad que determinan qué píxeles se consideran parte del objeto (en este caso, microplásticos) y cuáles no.
-**propiedades_tipo_imagen:** Este diccionario tiene como claves las rutas de las imágenes y como valores listas vacías que se llenarán con las propiedades geométricas extraídas de cada contorno encontrado en las imágenes.
+- **rutas_imagenes:** Esta lista contiene las rutas de las imágenes que se van a analizar. Se incluyen tres tipos de microplásticos: alquitran (TAR), fragmento (FRA) y pellet (PEL).
+- **titulos_imagenes:** Esta lista contiene los títulos correspondientes a cada tipo de imagen, que se usarán para etiquetar las visualizaciones.
+- **valores_umbral:** Este diccionario almacena umbrales específicos para cada imagen, que se utilizan para la binarización de la imagen. Los umbrales son valores de intensidad que determinan qué píxeles se consideran parte del objeto (en este caso, microplásticos) y cuáles no.
+- **propiedades_tipo_imagen:** Este diccionario tiene como claves las rutas de las imágenes y como valores listas vacías que se llenarán con las propiedades geométricas extraídas de cada contorno encontrado en las imágenes.
 
 Luego se inicia un bucle que itera sobre cada ruta de imagen:
 1. Lectura de la Imagen: Se utiliza cv2.imread para cargar cada imagen.
