@@ -141,3 +141,20 @@ La función **identificarMicroplasticos** tiene como objetivo clasificar los mic
    - que su umbral correspondiente.
    - 'FRA': Si la proporción del área del contenedor es menor que el umbral definido para fragmentos.
    - 'TAR': Si no cumple con las condiciones anteriores, se clasifica como alquitran.
+### 3.3.6 Sección de predicciones
+Esta sección del código se centra en realizar predicciones sobre un conjunto específico de imágenes que representan microplásticos.
+1. Definición de varibles:
+   - rutas_imagenes_prediccion: Se define una lista de rutas de imágenes que se utilizarán para realizar las predicciones sobre microplásticos.
+   - umbrales_imagenes: El diccionario asocia cada imagen a un umbral específico. Este umbral se utiliza para binarizar la imagen y facilitar la detección de contornos.
+   - indices_reales_imagenes: Asocia cada imagen con su índice real en un conjunto de clasificación, permitiendo la comparación con las predicciones.
+   - indices_prediccion_clase: Asocia las etiquetas de clasificación (TAR, PEL, FRA) a sus respectivos índices, lo que ayuda a gestionar los resultados de la clasificación.
+   - matriz_confusion: Se inicializa una matriz de confusión de tamaño 3×3 para almacenar las frecuencias de clasificaciones correctas e incorrectas. Cada fila representa una clase real, mientras que cada columna representa una predicción.
+2. Iteración Sobre las Imágenes: Para cada imagen en rutas_imagenes_prediccion, se obtiene el umbral correspondiente y se lee la imagen utilizando **cv2.imread(ruta_imagen)**.
+3. Binarización de Imágenes: La imagen se convierte a escala de grises y se aplica un umbral para crear una imagen binarizada. Esto facilita la identificación de contornos.
+4. Detección de Contornos: Se utiliza **cv2.findContours()** para detectar contornos en la imagen umbralizada. Esto permite identificar las diferentes formas presentes en la imagen.
+5. Clasificación de Contornos:
+   - Para cada contorno detectado, se llama a la función **identificarMicroplasticos**, que clasifica el contorno según las propiedades geométricas previamente definidas.
+   - Si el contorno es clasificado correctamente, se actualiza la matriz de confusión usando los índices reales y de predicción.
+6. Graficación de la Matriz de Confusión:
+   - La matriz de confusión se visualiza utilizando Seaborn (sns.heatmap), lo que permite una interpretación fácil de los resultados. Las anotaciones en la matriz indican la cantidad de clasificaciones correctas e incorrectas.
+   - Se configuran etiquetas y opciones de estilo para mejorar la presentación de la matriz.
