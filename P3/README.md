@@ -46,7 +46,7 @@ También se han creado funciones pertenecientes a la clase mencionada con el fin
 - **mostrar_monedas**: Muestra en forma de tabla toda la información sobre las monedas pasadas por parámetro.
 - **calcular_rangos**: Calcula los rángos de píxeles máximo y mínimo que puede tener una moneda.
 
-Cabe recalcar que la clase 'Moneda`está implementada de forma que sea posible usar cualquier tipo de moneda (por este motivo las funciones aceptan un parámetro), sin embargo, para esta práctica haremos uso de la moneda Europea.
+Cabe recalcar que la clase 'Moneda' está implementada de forma que sea posible usar cualquier tipo de moneda (por este motivo las funciones aceptan un parámetro), sin embargo, para esta práctica haremos uso de la moneda Europea.
 
 Se ha creado una función llamada **click** para manejar los eventos de click del mouse que detecta cuando el usuario hace click en la imagen. Su objetivo es capturar las coordenadas del punto donde se realizó el click. Sus parametros son:
 - event (int): Tipo de evento.
@@ -91,3 +91,34 @@ ESTO LO HAGO YO
 ## 3.2.4. Extras: Considerar que la imagen pueda contener objetos que no son monedas y/o haya solape entre las monedas. Demo en vivo.
 
 EXPLICAR LA FUNCIÓN 'detectar_monedas_mejorado'. DE FORMA DETALLADA.
+
+## 3.3 Tarea 2: Analizar microplásticos
+### 3.3.1. Obtener características
+La función **extraerPropiedades** se encarga de calcular propiedades geométricas de un contorno dado. Su funcionamiento es el siguiente.
+1. Cálculo del Área: Utiliza cv2.contourArea para calcular la superficie.
+2. Filtrado de Superficie: Si el área es menor o igual a 250, devuelve None.
+3. Cálculo del Perímetro: Usa cv2.arcLength para calcular el perímetro del contorno.
+4. Índice de Compacidad: Se calcula como (perímetro²) / superficie.
+5. Rectángulo Delimitador: Se obtiene con cv2.boundingRect.
+6. Proporción de Área: Calcula la proporción de superficie respecto al área del rectángulo.
+7. Ajuste de Elipse: Si el contorno tiene más de 5 puntos, se ajusta una elipse.
+8. Retorno de Propiedades: Devuelve superficie, perímetro, índice de compacidad, proporciones y más.
+### 3.3.2. Calculamos estadísticas
+Hemos creado la función **calcular_estadisticas** que calcula con np.max, np.mean y np.min y devuelve el valor máximo, mínimo y la media de las características pasadas
+### 3.3.3 Procesamiento de imágenes
+Lo primero que hacemos es declarar las listas y diccionarios para tener una mejor estructura de código.
+**rutas_imagenes:** Esta lista contiene las rutas de las imágenes que se van a analizar. Se incluyen tres tipos de microplásticos: alquitran (TAR), fragmento (FRA) y pellet (PEL).
+**titulos_imagenes:** Esta lista contiene los títulos correspondientes a cada tipo de imagen, que se usarán para etiquetar las visualizaciones.
+**valores_umbral:** Este diccionario almacena umbrales específicos para cada imagen, que se utilizan para la binarización de la imagen. Los umbrales son valores de intensidad que determinan qué píxeles se consideran parte del objeto (en este caso, microplásticos) y cuáles no.
+**propiedades_tipo_imagen:** Este diccionario tiene como claves las rutas de las imágenes y como valores listas vacías que se llenarán con las propiedades geométricas extraídas de cada contorno encontrado en las imágenes.
+
+Luego se inicia un bucle que itera sobre cada ruta de imagen:
+1. Lectura de la Imagen: Se utiliza cv2.imread para cargar cada imagen.
+2. Conversión a Escala de Grises: La imagen se convierte a escala de grises usando cv2.cvtColor, lo que es un paso previo necesario para la umbralización.
+3. Umbralización: Se aplica la técnica de umbralización inversa con cv2.threshold, creando una imagen binaria donde los píxeles por debajo del umbral se convierten a blanco (255) y los demás a negro (0).
+4. Detección de Contornos: Se utiliza cv2.findContours para detectar contornos en la imagen umbralizada.
+5. Extracción de Propiedades: Para cada contorno detectado, se llama a la función extraerPropiedades que calcula propiedades geométricas como el área, perímetro, índice de compacidad, etc. Las propiedades válidas se almacenan en el diccionario correspondiente.
+
+Después de procesar todas las imágenes, se calcula un conjunto de estadísticas (máximo, promedio y mínimo) para cada tipo de imagen utilizando la función calcular_estadisticas. Estos resultados se almacenan en el diccionario resultados_estadisticos.
+
+Finalmente, se visualizan las imágenes procesadas usando matplotlib. Cada imagen umbralizada se muestra en una subgráfica, con su título correspondiente. Esto permite una evaluación visual rápida de los resultados del procesamiento.
