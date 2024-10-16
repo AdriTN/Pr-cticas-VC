@@ -122,3 +122,22 @@ Luego se inicia un bucle que itera sobre cada ruta de imagen:
 Después de procesar todas las imágenes, se calcula un conjunto de estadísticas (máximo, promedio y mínimo) para cada tipo de imagen utilizando la función calcular_estadisticas. Estos resultados se almacenan en el diccionario resultados_estadisticos.
 
 Finalmente, se visualizan las imágenes procesadas usando matplotlib. Cada imagen umbralizada se muestra en una subgráfica, con su título correspondiente. Esto permite una evaluación visual rápida de los resultados del procesamiento.
+### 3.3.4 Extracción de estadísticas
+Esta sección del código se encarga de extraer estadísticas clave (máximos, promedios y mínimos) relacionadas con las propiedades geométricas de los microplásticos detectados en las imágenes procesadas. 
+
+### 3.3.5 Clasificar microplásticos
+La función **identificarMicroplasticos** tiene como objetivo clasificar los microplásticos detectados en una imagen, basándose en sus propiedades geométricas extraídas. Utiliza comparaciones con valores umbral predefinidos para determinar si el contorno dado corresponde a un pellet, un fragmento o un tipo de alquitran.
+1. La función llama a **extraerPropiedades(contorno)**, que devuelve diversas propiedades geométricas del contorno
+2. Desempaquetado de Propiedades:
+   - area_contorno: El área del contorno del microplástico.
+   - proporcion_area_contenedor: La proporción entre el área del contorno y el área de un rectángulo delimitador.
+   - proporciones_ejes_elipse: La proporción entre los ejes mayor y menor de la elipse ajustada al contorno.
+3. Definición de Umbrales:
+   - umbral_area_contenedor_pellet: Umbral para determinar si un contorno pertenece a un pellet.
+   - umbral_proporciones_ejes_pellet: Umbral para la proporción de ejes de la elipse en pellets.
+   - umbral_area_contenedor_fragmento: Umbral para determinar si un contorno pertenece a un fragmento.
+4. Comparaciones con Umbrales: Si el área del contorno es menor o igual a 250, se considera que el contorno no es significativo y se retorna None. Se clasifica el contorno como:
+   - 'PEL': Si el área del contorno es mayor que el umbral de área y la proporción de ejes de la elipse es también mayor
+   - que su umbral correspondiente.
+   - 'FRA': Si la proporción del área del contenedor es menor que el umbral definido para fragmentos.
+   - 'TAR': Si no cumple con las condiciones anteriores, se clasifica como alquitran.
