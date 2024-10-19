@@ -186,3 +186,5 @@ Esta sección del código se centra en realizar predicciones sobre un conjunto e
 6. Graficación de la Matriz de Confusión:
    - La matriz de confusión se visualiza utilizando Seaborn (sns.heatmap), lo que permite una interpretación fácil de los resultados. Las anotaciones en la matriz indican la cantidad de clasificaciones correctas e incorrectas.
    - Se configuran etiquetas y opciones de estilo para mejorar la presentación de la matriz.
+
+# Realizado por: Adrián Talavera Naranjo y Arhamis Gutiérrez Caballero.
