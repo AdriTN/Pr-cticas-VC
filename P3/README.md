@@ -187,4 +187,15 @@ Esta sección del código se centra en realizar predicciones sobre un conjunto e
    - La matriz de confusión se visualiza utilizando Seaborn (sns.heatmap), lo que permite una interpretación fácil de los resultados. Las anotaciones en la matriz indican la cantidad de clasificaciones correctas e incorrectas.
    - Se configuran etiquetas y opciones de estilo para mejorar la presentación de la matriz.
 
+### 3.3.7 Resultado de la matriz de confusión:
+![**Imagen 2.** Visualización de la matriz de confusión.](/P3/assets/output.png)
+
+### 3.3.8 Observaciones:
+ - Clase 0 (43 correctos, 13 incorrectos): Aunque la mayoría de las predicciones son correctas, hay un número considerable de clasificaciones incorrectas, con 8 elementos predichos como clase 1 y 5 como clase 2.
+ - Clase 1 (45 correctos, 14 incorrectos): El modelo tiene un buen desempeño en esta clase, pero hay algunos errores en las clases 0 y 2.
+ - Clase 2 (49 correctos, 33 incorrectos): Esta clase tiene el mayor número de errores de clasificación, ya que 26 elementos se clasificaron como clase 0 y 7 como clase 1.
+### 3.3.9 Conclusión:
+El modelo tiene una buena capacidad para clasificar las tres clases, especialmente para las clases 1 y 2, donde la precisión es razonablemente alta.
+
+
 # Realizado por: Adrián Talavera Naranjo y Arhamis Gutiérrez Caballero.
