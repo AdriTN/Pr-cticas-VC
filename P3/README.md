@@ -86,7 +86,19 @@ También se ha creado una función llamada **interaccion** que se encarga de pro
 
 ### 3.2.3. ¿Qué problemas se han encontrado?
 
-ESTO LO HAGO YO
+Los principales problemas que pueden observarse al intentar identificar monedas de un valor específico en una imagen son los siguientes:
+
+1. Variabilidad en las condiciones de iluminación: Las diferencias en la iluminación pueden generar sombras o reflejos sobre las monedas, lo que complica su correcta detección y segmentación. En algunos casos, puede ser difícil diferenciar el brillo de una moneda debido a estas variaciones.
+
+2. Dificultades con el enfoque y la calidad de la imagen: Si la imagen no está bien enfocada o la resolución es baja, las características de las monedas pueden no ser claras. Esto puede llevar a errores en la detección de los bordes o detalles importantes, como las inscripciones y el tamaño.
+
+3. Características geométricas similares entre diferentes monedas: Algunas monedas tienen diámetros o formas muy similares, lo que dificulta su identificación si solo se utiliza el tamaño como criterio. Por ejemplo, las monedas de 50 céntimos y 1 euro tienen diámetros cercanos, y esto puede generar confusiones.
+
+4. Posicionamiento y orientación de las monedas: Las monedas pueden estar dispuestas en diferentes orientaciones, lo que dificulta su identificación mediante algoritmos basados solo en la forma. Además, si están inclinadas o parcialmente cubiertas por algún otro objeto, puede ser más complicado detectarlas correctamente.
+
+5. Ruido en la imagen o presencia de objetos no relacionados: Es posible que la imagen contenga otros objetos que no son monedas, lo que puede causar confusión en el algoritmo. Este ruido en la imagen debe ser filtrado de manera adecuada para evitar falsos positivos.
+
+6. Problemas con la correspondencia de píxeles a medidas reales: La precisión en la identificación del valor de la moneda depende de la correcta correspondencia entre los píxeles y las medidas reales de la moneda. Sin una buena calibración, pueden generarse errores en la identificación del tamaño.
 
 ## 3.2.4. Extras: Considerar que la imagen pueda contener objetos que no son monedas y/o haya solape entre las monedas. Demo en vivo.
 
