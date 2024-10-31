@@ -1,4 +1,4 @@
-# Proyecto de Visión Computacional: Sistema de Detección y Reconocimiento de Vehículos y Matrículas
+# Sistema de Detección y Reconocimiento de Vehículos y Matrículas
 
 Este proyecto de visión por computador está enfocado en la detección y seguimiento de vehículos y personas, así como en el reconocimiento óptico de caracteres (OCR) de matrículas. El sistema está diseñado para analizar secuencias de video, identificar distintos tipos de objetos en movimiento y extraer información de las matrículas de los vehículos detectados.
 
