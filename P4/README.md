@@ -125,4 +125,5 @@ Los resultados se almacenan en `detecciones.csv` para facilitar el análisis pos
 
 El cuaderno también muestra ejemplos visuales de las detecciones, lo que permite validar visualmente el rendimiento del sistema.
 
+
 # Cradores: AAdrián Talavera Naranjo y Arhamis Gutiérrez Caballero.
