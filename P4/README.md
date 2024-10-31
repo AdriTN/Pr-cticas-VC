@@ -113,7 +113,7 @@ Este archivo se actualiza continuamente a medida que se procesan más fotogramas
 ### 6. **Procesamiento de Video**
 El núcleo del proyecto es el procesamiento de video, que se ejecuta de manera fotograma por fotograma. Aquí se realiza la detección, se extraen las matrículas, y se utilizan algoritmos de seguimiento para manejar múltiples objetos en movimiento. Las lecturas de OCR se corrigen automáticamente según sea necesario.
 
-> **Advertencia de Rendimiento**: Si ejecutas este proyecto en un entorno sin GPU, el procesamiento será más lento. Puedes optimizarlo ejecutándolo en un entorno de GPU, como Google Colab o una estación de trabajo con una GPU compatible.
+> **Advertencia de Rendimiento**: Si ejecuta este proyecto en un entorno sin GPU, el procesamiento será más lento. Puedes optimizarlo ejecutándolo en un entorno de GPU, como Google Colab o una estación de trabajo con una GPU compatible.
 
 ---
 
@@ -126,4 +126,4 @@ Los resultados se almacenan en `detecciones.csv` para facilitar el análisis pos
 El cuaderno también muestra ejemplos visuales de las detecciones, lo que permite validar visualmente el rendimiento del sistema.
 
 
-# Cradores: AAdrián Talavera Naranjo y Arhamis Gutiérrez Caballero.
+# Cradores: Adrián Talavera Naranjo y Arhamis Gutiérrez Caballero.
