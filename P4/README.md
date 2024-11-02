@@ -124,6 +124,7 @@ Esta función verifica si el texto dado cumple con el formato de una matrícula 
 
 **Parámetros**
 - text (str): Cadena de 7 caracteres que representa la matrícula detectada.
+
 **Retorno**
 - bool: True si la matrícula cumple con el formato esperado, False en caso contrario.
 
@@ -132,6 +133,7 @@ Esta función convierte el texto de la matrícula a un formato estándar utiliza
 
 **Parámetros**
 - text (str): Cadena de 7 caracteres que representa la matrícula a formatear.
+
 **Retorno**
 - license_plate_ (str): Cadena formateada de la matrícula, aplicando el mapeo para convertir caracteres según las reglas predefinidas.
 
@@ -139,25 +141,29 @@ Esta función convierte el texto de la matrícula a un formato estándar utiliza
 Lee el texto de la matrícula en una imagen recortada utilizando OCR (Reconocimiento Óptico de Caracteres). Si el texto cumple con el formato de una matrícula válida, lo formatea y devuelve la puntuación de confianza de la detección.
 **Parámetros**
 - license_plate_crop (array): Recorte de la imagen que contiene la matrícula a ser leída.
+
 **Retorno**
 - tuple (str, float):
-      - Matrícula formateada (str) si cumple con el formato; None si no es válida.
-      - Puntuación de confianza (float) asociada a la lectura de la matrícula.
+    - Matrícula formateada (str) si cumple con el formato; None si no es válida.
+    - Puntuación de confianza (float) asociada a la lectura de la matrícula.
+  
 #### 7.4 procesar_y_anonimizar(imagen, frame_id)
 Procesa una imagen detectando objetos de interés, como vehículos y personas, y los anonimiza aplicando un desenfonque. Además, registra los resultados de las detecciones en un archivo CSV.
 
 **Parámetros**
 - imagen (array): Imagen a procesar.
 - frame_id (int): Identificador del cuadro de video en el que se realiza la detección.
+
 **Retorno**
-    -tuple (array, array):
-        - Imagen con recuadros y etiquetas (array).
-        - Imagen anonimizada con desenfoque aplicado a las áreas sensibles (array).
+- tuple (array, array):
+    - Imagen con recuadros y etiquetas (array).
+    - Imagen anonimizada con desenfoque aplicado a las áreas sensibles (array).
+
 **Descripción**
-    - Detección y seguimiento de Objetos: Se detectan vehículos y otros objetos mediante un modelo de seguimiento, que asigna ID únicos a cada objeto.
-    - Desenfoque para anonimización: Aplica un desenfoque a las regiones que contienen vehículos para proteger la privacidad.
-    - Detección de matrículas: Si se detecta un vehículo, se realiza un recorte de la región de la matrícula, y se verifica y formatea el texto si es válido.
-    - Registro en CSV: Guarda cada detección en un archivo detecciones.csv, incluyendo datos como clase de objeto, confianza de detección, coordenadas y, si está disponible, el texto de la matrícula detectada.El formato concretamente es este:fotograma, tipo_objeto, confianza, identificador_tracking, x1, y1, x2, y2, matrícula_en_su_caso, confianza, mx1,my1,mx2,my2, texto_matricula
+- Detección y seguimiento de Objetos: Se detectan vehículos y otros objetos mediante un modelo de seguimiento, que asigna ID únicos a cada objeto.
+- Desenfoque para anonimización: Aplica un desenfoque a las regiones que contienen vehículos para proteger la privacidad.
+- Detección de matrículas: Si se detecta un vehículo, se realiza un recorte de la región de la matrícula, y se verifica y formatea el texto si es válido.
+- Registro en CSV: Guarda cada detección en un archivo detecciones.csv, incluyendo datos como clase de objeto, confianza de detección, coordenadas y, si está disponible, el texto de la matrícula detectada.El formato concretamente es este:fotograma, tipo_objeto, confianza, identificador_tracking, x1, y1, x2, y2, matrícula_en_su_caso, confianza, mx1,my1,mx2,my2, texto_matricula
 
 ### 8. Procesamiento y Anonimización de Video
 1. Lectura del video: Abre un archivo de video y extrae sus propiedades como FPS, ancho y alto de los cuadros.
