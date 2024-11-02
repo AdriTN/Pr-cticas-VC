@@ -147,8 +147,8 @@ Lee el texto de la matrícula en una imagen recortada utilizando OCR (Reconocimi
 Procesa una imagen detectando objetos de interés, como vehículos y personas, y los anonimiza aplicando un desenfonque. Además, registra los resultados de las detecciones en un archivo CSV.
 
 **Parámetros**
-imagen (array): Imagen a procesar.
-frame_id (int): Identificador del cuadro de video en el que se realiza la detección.
+- imagen (array): Imagen a procesar.
+- frame_id (int): Identificador del cuadro de video en el que se realiza la detección.
 **Retorno**
     -tuple (array, array):
         - Imagen con recuadros y etiquetas (array).
