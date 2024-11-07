@@ -180,5 +180,11 @@ Los resultados se almacenan en `detecciones.csv` para facilitar el análisis pos
 
 El cuaderno también muestra ejemplos visuales de las detecciones, lo que permite validar visualmente el rendimiento del sistema.
 
+### Video resultado con la deteccioón de objetos
+![video con recuadros](output_con_recuadros.gif)
+
+### Video resultado con anonimizado
+![video con anonimizado](output_con_anonimizado.gif)
+
 
 # Cradores: Adrián Talavera Naranjo y Arhamis Gutiérrez Caballero.
