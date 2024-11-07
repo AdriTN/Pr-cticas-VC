@@ -92,7 +92,7 @@ def main():
     mp_face_mesh = mp.solutions.face_mesh
 
     # Cargar la imagen de la nariz
-    nose_overlay = load_nose_overlay('bird.png')
+    nose_overlay = load_nose_overlay("P5/bird.png")
     bird_region, alpha_region = get_bird_region_and_mask(nose_overlay)
 
     ancho, alto = obtener_resolucion_pantalla()
