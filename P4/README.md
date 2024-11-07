@@ -40,6 +40,16 @@ pip install ultralytics opencv-python easyocr numpy
 
 El cuaderno se organiza en diferentes secciones, cada una de las cuales desempeña un papel esencial en la detección y reconocimiento de objetos.
 
+### 0. **Entrenamiento del modelo**
+Para el entrenado del modelo de detección de matriculas se ha usado el siguiente [dataset](https://universe.roboflow.com/augmented-startups/vehicle-registration-plates-trudk/dataset/2)
+
+El entrenamiento ha sido desarrollado en Colab permitiendonos usar su GPU y mostrando los siguientes resultados:
+
+![Resultados]()
+
+
+![Gráfica](graphic.png)
+
 ### 1. **Importación de Librerías**
 La primera celda del cuaderno importa todas las bibliotecas necesarias:
 
