@@ -45,7 +45,7 @@ Para el entrenado del modelo de detección de matriculas se ha usado el siguient
 
 El entrenamiento ha sido desarrollado en Colab permitiendonos usar su GPU y mostrando los siguientes resultados:
 
-![Resultados]()
+![Resultados](colab.png)
 
 
 ![Gráfica](graphic.png)
