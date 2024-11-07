@@ -184,7 +184,7 @@ El cuaderno también muestra ejemplos visuales de las detecciones, lo que permit
 ![video con recuadros](output_con_recuadros.gif)
 
 ### Video resultado con anonimizado
-![video con anonimizado](output_anonimizado.gif)
+![video anonimizado](output_anonimizado.gif)
 
 
 # Cradores: Adrián Talavera Naranjo y Arhamis Gutiérrez Caballero.
