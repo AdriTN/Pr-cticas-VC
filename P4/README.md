@@ -40,6 +40,16 @@ pip install ultralytics opencv-python easyocr numpy
 
 El cuaderno se organiza en diferentes secciones, cada una de las cuales desempeña un papel esencial en la detección y reconocimiento de objetos.
 
+### 0. **Entrenamiento del modelo**
+Para el entrenado del modelo de detección de matrículas se ha usado el siguiente [dataset](https://universe.roboflow.com/augmented-startups/vehicle-registration-plates-trudk/dataset/2)
+
+El entrenamiento ha sido desarrollado en Colab permitiéndonos usar su GPU y mostrando los siguientes resultados:
+
+![Resultados](colab.png)
+
+
+![Gráfica](graphic.png)
+
 ### 1. **Importación de Librerías**
 La primera celda del cuaderno importa todas las bibliotecas necesarias:
 
@@ -138,7 +148,7 @@ Esta función convierte el texto de la matrícula a un formato estándar utiliza
 - license_plate_ (str): Cadena formateada de la matrícula, aplicando el mapeo para convertir caracteres según las reglas predefinidas.
 
 #### 7.3 read_license_plate(license_plate_crop):
-Lee el texto de la matrícula en una imagen recortada utilizando OCR (Reconocimiento Óptico de Caracteres). Si el texto cumple con el formato de una matrícula válida, lo formatea y devuelve la puntuación de confianza de la detección.
+Lee el texto de la matrícula en una imagen recortada utilizando OCR (Reconocimiento Óptico de Caracteres). Si el texto cumple con el formato de una matrícula válida, lo formatea y devuelve la puntuación de confianza de la detección. Cabe destacar que se ha intentado manipular la imagen mediante técnicas vistas en clase para que la matrícula sea más fácil de leer pero no ha sido posible, estas partes han sido comentadas para que el código sea más rápido.
 **Parámetros**
 - license_plate_crop (array): Recorte de la imagen que contiene la matrícula a ser leída.
 
@@ -179,6 +189,12 @@ Los resultados se almacenan en `detecciones.csv` para facilitar el análisis pos
 - **Validación de OCR**: Verificar la precisión del reconocimiento de matrículas y ajustar según sea necesario.
 
 El cuaderno también muestra ejemplos visuales de las detecciones, lo que permite validar visualmente el rendimiento del sistema.
+
+### Video resultado con la deteccioón de objetos
+![video con recuadros](output_con_recuadros.gif)
+
+### Video resultado con anonimizado
+![video anonimizado](output_anonimizado.gif)
 
 
 # Cradores: Adrián Talavera Naranjo y Arhamis Gutiérrez Caballero.
