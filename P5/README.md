@@ -45,12 +45,4 @@ pip install opencv-python mediapipe numpy
 
 Estas imágenes deben estar ubicadas en la carpeta P5/.
 
-4. **Ejecutar el script:**
-
-Navega hasta el directorio donde se encuentra el script y ejecuta:
-
-```bash
-python nombre_del_script.py
-```
-
 ## Uso
