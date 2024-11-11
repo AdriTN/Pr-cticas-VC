@@ -46,3 +46,15 @@ pip install opencv-python mediapipe numpy
 Estas imágenes deben estar ubicadas en la carpeta P5/.
 
 ## Uso
+
+**Controles:**
+
+- Mueve tu cabeza hacia arriba y hacia abajo para controlar el pájaro.
+- Evita las tuberías para acumular puntos.
+- El juego termina al chocar con un obstáculo o al alcanzar el puntaje máximo.
+
+**Salir del juego:**
+
+- Presiona la tecla Esc para salir en cualquier momento.
+
+## Funcionamiento del Código
