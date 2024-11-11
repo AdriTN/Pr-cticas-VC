@@ -9,10 +9,6 @@ Este proyecto es un juego interactivo que utiliza la detección facial para cont
 - [Instalación](#instalación)
 - [Uso](#uso)
 - [Funcionamiento del Código](#funcionamiento-del-código)
-  - [Importación de Librerías](#importación-de-librerías)
-  - [Funciones Auxiliares](#funciones-auxiliares)
-  - [Clases Principales](#clases-principales)
-  - [Lógica del Juego](#lógica-del-juego)
 - [Créditos](#créditos)
 
 ## Descripción
@@ -58,3 +54,21 @@ Estas imágenes deben estar ubicadas en la carpeta P5/.
 - Presiona la tecla Esc para salir en cualquier momento.
 
 ## Funcionamiento del Código
+
+El juego se organiza en varias secciones que realizan tareas específicas:
+
+**Detección Facial:** El juego utiliza la cámara para detectar la cara del jugador y localizar la posición de la nariz. Esta posición se traduce en coordenadas que determinan la ubicación del pájaro en la pantalla. La biblioteca MediaPipe es la encargada de la detección facial en tiempo real, mientras que OpenCV convierte las imágenes y procesa los datos obtenidos de la cámara.
+
+**Superposición de Imágenes:** Una imagen de pájaro se superpone en la nariz del jugador, y su posición se actualiza continuamente en función de los movimientos de la cabeza del jugador. Esto permite la sincronización del pájaro con los movimientos de la persona.
+
+**Generación de Obstáculos:** Los obstáculos (tuberías) se generan en posiciones aleatorias con huecos de tamaño variable. Las tuberías se mueven horizontalmente de derecha a izquierda en la pantalla. Cada tubería es un objeto que actualiza su posición en el tiempo, lo que da la apariencia de movimiento.
+
+**Detección de Colisiones:** Para asegurar que el juego sea desafiante, se verifica si el pájaro entra en contacto con alguna de las tuberías. Si se detecta una colisión entre el personaje y los obstáculos, el juego se detiene y muestra el puntaje del jugador.
+
+**Aumento de Dificultad:** A medida que el jugador acumula puntos, la velocidad de los obstáculos aumenta gradualmente, incrementando la dificultad del juego. Cada cierto puntaje se incrementa la velocidad.
+
+**Bucle de Juego Principal:** El juego opera dentro de un bucle que actualiza el estado de la pantalla en función de los datos de la cámara, los movimientos del jugador y la posición de los obstáculos. El bucle también monitorea las condiciones de finalización del juego.
+
+## Créditos
+**Desarrollador: Adrián Talavera Naranjo y Arhamis Gutiérrez Caballero**
+**Recursos: Este juego utiliza OpenCV para el procesamiento de video, MediaPipe para la detección facial, y NumPy para las operaciones con matrices.**
