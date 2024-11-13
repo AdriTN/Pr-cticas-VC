@@ -10,6 +10,7 @@ Este proyecto es un juego interactivo que utiliza la detección facial para cont
 - [Uso](#uso)
 - [Funcionamiento del Código](#funcionamiento-del-código)
 - [Créditos](#créditos)
+- [Resultado](#resultado)
 
 ## Descripción
 
@@ -68,6 +69,9 @@ El juego se organiza en varias secciones que realizan tareas específicas:
 **Aumento de Dificultad:** A medida que el jugador acumula puntos, la velocidad de los obstáculos aumenta gradualmente, incrementando la dificultad del juego. Cada cierto puntaje se incrementa la velocidad.
 
 **Bucle de Juego Principal:** El juego opera dentro de un bucle que actualiza el estado de la pantalla en función de los datos de la cámara, los movimientos del jugador y la posición de los obstáculos. El bucle también monitorea las condiciones de finalización del juego.
+
+## Resultado final
+![video resultado](flappyBird.gif)
 
 ## Créditos
 **Desarrollador: Adrián Talavera Naranjo y Arhamis Gutiérrez Caballero**
