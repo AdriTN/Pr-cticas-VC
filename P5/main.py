@@ -8,7 +8,7 @@ def obtener_resolucion_pantalla():
     root = tk.Tk()
     root.withdraw()
     ancho = root.winfo_screenwidth()
-    alto = root.winfo_screenheight()
+    alto = root.winfo_screenheight() - 300
     return ancho, alto
 
 class Pipe:
@@ -168,7 +168,7 @@ def place_nose_overlay(frame, nose_x, nose_y, bird_region, alpha_region):
 def create_random_obstacle(alto, pipe_img, pipe_width, initial_x):
     # Definir tamaños mínimos y máximos basados en la altura de la ventana
     min_pipe_height = int(alto * 0.1)  # 10% de la altura
-    max_pipe_height = int(alto * 0.3)  # 30% de la altura
+    max_pipe_height = int(alto * 0.30)  # 30% de la altura
     min_gap_height = int(alto * 0.2)   # 20% de la altura
     max_gap_height = int(alto * 0.35)  # 35% de la altura
 
@@ -208,7 +208,7 @@ def main():
     pipe_img = load_image_with_alpha('P5/pipe.png')
     ancho, alto = obtener_resolucion_pantalla()
     cap = cv2.VideoCapture(0)
-    velocidad = 6
+    velocidad = 8
     max_score = 20
     pipe_width = 100
     puntaje = 0
