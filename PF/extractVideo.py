@@ -19,7 +19,7 @@ def calculate_angle(a, b, c):
     return int(angle)
 
 # Ruta del video
-video_path = "loveMe.mp4"  # Cambia por tu archivo de video
+video_path = "PF/loveMe.mp4"  # Cambia por tu archivo de video
 output_csv = "angles.csv"  # Archivo donde se guardarán los datos
 
 # Abrir el video

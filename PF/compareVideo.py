@@ -2,7 +2,23 @@ import cv2
 import mediapipe as mp
 import numpy as np
 import csv
-import pandas as pd
+
+# Leer angles.csv y almacenarlo en angles_reference
+angles_reference = {}
+with open('angles.csv', mode='r') as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        frame_number = int(row['frame'])
+        angles_reference[frame_number] = {
+            'left_elbow_angle': row['left_elbow_angle'],
+            'right_elbow_angle': row['right_elbow_angle'],
+            'left_knee_angle': row['left_knee_angle'],
+            'right_knee_angle': row['right_knee_angle']
+        }
+
+# Inicializar Mediapipe
+mp_pose = mp.solutions.pose
+mp_drawing = mp.solutions.drawing_utils
 
 # Función para calcular los ángulos
 def calculate_angle(a, b, c):
@@ -13,108 +29,174 @@ def calculate_angle(a, b, c):
     angle = np.abs(radians * 180.0 / np.pi)
     if angle > 180.0:
         angle = 360 - angle
-    return int(angle)  # Mantén como float
+    return int(angle)
 
-# Función para obtener coordenadas
-def get_coords(landmark, default=[0, 0]):
-    return [landmark.x, landmark.y] if landmark and landmark.visibility > 0.5 else default
-
-# Parámetros
-video_path = "loveMe.mp4"  # Ruta del video a procesar
-csv_base_path = "angles.csv"  # Archivo CSV base para comparación
-output_csv = "video_angles_corrected.csv"  # Nuevo archivo CSV con diferencias corregidas
-margin_of_error = 10  # Margen de error en grados
-
-# Leer y procesar los datos del CSV base
-base_data = pd.read_csv(csv_base_path, skiprows=1, usecols=[1, 2, 3, 4])
-
-# Convertir '&&' y otros valores no numéricos a NaN
-base_data = base_data.replace("&&", np.nan).apply(pd.to_numeric, errors='coerce')
-
-# Inicializar Mediapipe
-mp_pose = mp.solutions.pose
-mp_drawing = mp.solutions.drawing_utils
+# Ruta del video o fuente de la cámara
+video_path = "PF/loveMe.mp4"  # Cambia por tu archivo de video o pon 0 para usar la cámara web
 
 # Abrir el video
 cap = cv2.VideoCapture(video_path)
 
-# Abrir el archivo CSV para escribir
-with open(output_csv, 'w', newline='') as csvfile:
-    csvwriter = csv.writer(csvfile)
-    csvwriter.writerow(['Frame', 'LeftElbow', 'RightElbow', 'LeftKnee', 'RightKnee', 
-                        'Similarity (%)', 'Diff_LeftElbow', 'Diff_RightElbow', 
-                        'Diff_LeftKnee', 'Diff_RightKnee'])
+# Lista para guardar los resultados de la comparación
+comparison_results = []
 
-    with mp_pose.Pose(static_image_mode=False, min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
-        frame_idx = 0
-        q = 0
+# Variables para calcular la precisión
+total_frames = 0
+matching_frames = 0
+matching_angles_count = 0
+total_angles_count = 0
 
-        while cap.isOpened():
-            ret, frame = cap.read()
-            if not ret or q >= len(base_data):
-                break
+with mp_pose.Pose(static_image_mode=False, min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
+    while cap.isOpened():
+        ret, frame = cap.read()
+        if not ret:
+            break
 
-            # Convertir a RGB
-            frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            results = pose.process(frame_rgb)
+        total_frames += 1
 
-            if results.pose_landmarks:
-                # Obtener landmarks
-                landmarks = results.pose_landmarks.landmark
+        # Obtener el número de frame
+        frame_number = int(cap.get(cv2.CAP_PROP_POS_FRAMES))
 
-                # Coordenadas de interés
-                left_shoulder = get_coords(landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value])
-                left_elbow = get_coords(landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value])
-                left_wrist = get_coords(landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value])
+        # Convertir a RGB
+        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        results = pose.process(frame_rgb)
 
-                right_shoulder = get_coords(landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER.value])
-                right_elbow = get_coords(landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW.value])
-                right_wrist = get_coords(landmarks[mp_pose.PoseLandmark.RIGHT_WRIST.value])
+        # Inicializar datos del frame
+        current_angles = {
+            "frame": frame_number,
+            "left_elbow_angle": "&&",
+            "right_elbow_angle": "&&",
+            "left_knee_angle": "&&",
+            "right_knee_angle": "&&",
+            "match_left_elbow_angle": "",
+            "match_right_elbow_angle": "",
+            "match_left_knee_angle": "",
+            "match_right_knee_angle": ""
+        }
 
-                left_hip = get_coords(landmarks[mp_pose.PoseLandmark.LEFT_HIP.value])
-                left_knee = get_coords(landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value])
-                left_ankle = get_coords(landmarks[mp_pose.PoseLandmark.LEFT_ANKLE.value])
+        if results.pose_landmarks:
+            # Obtener landmarks
+            landmarks = results.pose_landmarks.landmark
 
-                right_hip = get_coords(landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value])
-                right_knee = get_coords(landmarks[mp_pose.PoseLandmark.RIGHT_KNEE.value])
-                right_ankle = get_coords(landmarks[mp_pose.PoseLandmark.RIGHT_ANKLE.value])
+            def get_coords(landmark):
+                # Devuelve coordenadas si el punto es visible
+                return [landmark.x, landmark.y] if landmark.visibility > 0.5 else None
 
-                # Calcular ángulos
-                left_elbow_angle = calculate_angle(left_shoulder, left_elbow, left_wrist)
-                right_elbow_angle = calculate_angle(right_shoulder, right_elbow, right_wrist)
-                left_knee_angle = calculate_angle(left_hip, left_knee, left_ankle)
-                right_knee_angle = calculate_angle(right_hip, right_knee, right_ankle)
+            # Coordenadas de interés
+            keypoints = {
+                "left_shoulder": get_coords(landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER]),
+                "left_elbow": get_coords(landmarks[mp_pose.PoseLandmark.LEFT_ELBOW]),
+                "left_wrist": get_coords(landmarks[mp_pose.PoseLandmark.LEFT_WRIST]),
+                "right_shoulder": get_coords(landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER]),
+                "right_elbow": get_coords(landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW]),
+                "right_wrist": get_coords(landmarks[mp_pose.PoseLandmark.RIGHT_WRIST]),
+                "left_hip": get_coords(landmarks[mp_pose.PoseLandmark.LEFT_HIP]),
+                "left_knee": get_coords(landmarks[mp_pose.PoseLandmark.LEFT_KNEE]),
+                "left_ankle": get_coords(landmarks[mp_pose.PoseLandmark.LEFT_ANKLE]),
+                "right_hip": get_coords(landmarks[mp_pose.PoseLandmark.RIGHT_HIP]),
+                "right_knee": get_coords(landmarks[mp_pose.PoseLandmark.RIGHT_KNEE]),
+                "right_ankle": get_coords(landmarks[mp_pose.PoseLandmark.RIGHT_ANKLE]),
+            }
 
-                # Calcular diferencias y coincidencias
-                matches = 0
-                diffs = []
-                print(left_elbow_angle)
-                print(base_data.iloc[q,0])
+            def safe_calculate_angle(a, b, c):
+                # Devuelve el ángulo o None si algún punto está ausente
+                return calculate_angle(a, b, c) if a and b and c else None
 
-                for idx, (calculated_angle, base_angle) in enumerate(zip(
-                    [left_elbow_angle, right_elbow_angle, left_knee_angle, right_knee_angle], 
-                    base_data.iloc[q]
-                )):
-                    if pd.isna(base_angle):  # Si el valor base es NaN ('&&')
-                        diffs.append(0)
-                        matches += 1
-                    else:
-                        diff = abs(calculated_angle - base_angle)
-                        diffs.append(diff)
-                        if diff <= margin_of_error:
-                            matches += 1
+            # Calcular ángulos y actualizar el frame
+            left_elbow_angle = safe_calculate_angle(keypoints["left_shoulder"], keypoints["left_elbow"], keypoints["left_wrist"])
+            right_elbow_angle = safe_calculate_angle(keypoints["right_shoulder"], keypoints["right_elbow"], keypoints["right_wrist"])
+            left_knee_angle = safe_calculate_angle(keypoints["left_hip"], keypoints["left_knee"], keypoints["left_ankle"])
+            right_knee_angle = safe_calculate_angle(keypoints["right_hip"], keypoints["right_knee"], keypoints["right_ankle"])
 
-                # Calcular porcentaje de similitud
-                similarity_percentage = (matches / 4) * 100
+            if left_elbow_angle is not None:
+                current_angles["left_elbow_angle"] = left_elbow_angle
+            if right_elbow_angle is not None:
+                current_angles["right_elbow_angle"] = right_elbow_angle
+            if left_knee_angle is not None:
+                current_angles["left_knee_angle"] = left_knee_angle
+            if right_knee_angle is not None:
+                current_angles["right_knee_angle"] = right_knee_angle
 
-                # Guardar ángulos, similitud y diferencias en el CSV
-                csvwriter.writerow([frame_idx, left_elbow_angle, right_elbow_angle, left_knee_angle, 
-                                    right_knee_angle, similarity_percentage, *diffs])
+        # Obtener los ángulos de referencia para este frame
+        ref_angles = angles_reference.get(frame_number)
+        if ref_angles is None:
+            # No hay datos de referencia para este frame
+            continue
 
-                q += 1
+        # Comparar ángulos
+        angles_matched = True
+        for angle_key in ["left_elbow_angle", "right_elbow_angle", "left_knee_angle", "right_knee_angle"]:
+            ref_angle = ref_angles[angle_key]
+            curr_angle = current_angles[angle_key]
+            total_angles_count += 1
 
-            frame_idx += 1
+            match_key = f"match_{angle_key}"
+
+            if ref_angle == "&&" or curr_angle == "&&":
+                # No se puede comparar, saltar
+                current_angles[match_key] = "N/A"
+                continue
+            else:
+                ref_angle = int(ref_angle)
+                curr_angle = int(curr_angle)
+                # Definir un umbral para considerar que los ángulos coinciden (por ejemplo, 5 grados)
+                angle_diff = abs(ref_angle - curr_angle)
+                if angle_diff <= 5:
+                    matching_angles_count += 1
+                    current_angles[match_key] = "Yes"
+                else:
+                    angles_matched = False
+                    current_angles[match_key] = "No"
+                    # Imprimir en la terminal los ángulos que son distintos
+                    print(f"Frame {frame_number}, {angle_key}:")
+                    print(f"  Ángulo de referencia: {ref_angle}°")
+                    print(f"  Ángulo actual      : {curr_angle}°")
+                    print(f"  Diferencia         : {angle_diff}°")
+
+        if angles_matched:
+            matching_frames += 1
+
+        comparison_results.append(current_angles)
+
+        # Visualizar los landmarks en el video (opcional)
+        if results.pose_landmarks:
+            mp_drawing.draw_landmarks(
+                frame, results.pose_landmarks, mp_pose.POSE_CONNECTIONS,
+                mp_drawing.DrawingSpec(color=(0, 255, 0), thickness=2, circle_radius=3),
+                mp_drawing.DrawingSpec(color=(0, 0, 255), thickness=2, circle_radius=3),
+            )
+
+        # Mostrar video (opcional)
+        cv2.imshow("Video", frame)
+        if cv2.waitKey(1) & 0xFF == 27:  # Salir con la tecla ESC
+            break
 
 cap.release()
+cv2.destroyAllWindows()
 
-print(f"Resultados guardados en: {output_csv}")
+# Calcular precisión
+if total_angles_count > 0:
+    angle_accuracy = (matching_angles_count / total_angles_count) * 100
+else:
+    angle_accuracy = 0
+
+if total_frames > 0:
+    frame_accuracy = (matching_frames / total_frames) * 100
+else:
+    frame_accuracy = 0
+
+print(f"Precisión de ángulos: {angle_accuracy:.2f}%")
+print(f"Precisión de frames: {frame_accuracy:.2f}%")
+
+# Escribir los resultados de la comparación en un archivo CSV
+with open('comparison_results.csv', mode='w', newline='') as file:
+    fieldnames = [
+        "frame",
+        "left_elbow_angle", "right_elbow_angle", "left_knee_angle", "right_knee_angle",
+        "match_left_elbow_angle", "match_right_elbow_angle", "match_left_knee_angle", "match_right_knee_angle"
+    ]
+    writer = csv.DictWriter(file, fieldnames=fieldnames)
+    writer.writeheader()
+    writer.writerows(comparison_results)
+
+print("Resultados de la comparación guardados en comparison_results.csv")
