@@ -57,14 +57,15 @@ def calculate_differences(reference_angles, current_angles):
     return differences, results
 
 # Guardar registro en JSON
-def save_record(player_name, score):
+def save_record(player_name, score, difficulty):
     end_time = time.time()
     duration = int(end_time - START_TIME)
     record = {
         "name": player_name,
         "score": score,
         "time_played": duration,
-        "mode": "Con ayuda" if MODE_HELP else "Sin ayuda"
+        "mode": "Con ayuda" if MODE_HELP else "Sin ayuda",
+        "difficulty": difficulty
     }
     if os.path.exists("records.json"):
         with open("records.json", "r") as file:
@@ -188,7 +189,61 @@ def process_video(video_path, reference_images, reference_angles, output_folder)
     cap.release()
     pose.close()
     cv2.destroyAllWindows()
-    save_record(PLAYER_NAME, score)
+    save_record(PLAYER_NAME, score, difficulty_var.get())
+
+def load_and_sort_records(file_path):
+    """Load records from JSON and sort them by score."""
+    try:
+        with open(file_path, "r") as file:
+            records = json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        print(f"Error loading JSON: {e}")
+        return []
+
+    # Separate and sort by mode
+    con_ayuda = sorted(
+        [record for record in records if record["mode"] == "Con ayuda"],
+        key=lambda x: -x["score"],
+    )
+    sin_ayuda = sorted(
+        [record for record in records if record["mode"] == "Sin ayuda"],
+        key=lambda x: -x["score"],
+    )
+
+    return con_ayuda, sin_ayuda
+
+
+def display_rankings(con_ayuda, sin_ayuda):
+    """Display the rankings in a graphical interface."""
+    root = tk.Tk()
+    root.title("Ranking de Jugadores")
+    root.geometry("600x400")
+
+    # Create main frame
+    main_frame = ttk.Frame(root, padding="10")
+    main_frame.pack(fill=tk.BOTH, expand=True)
+
+    # Titles for columns
+    ttk.Label(main_frame, text="Modo: Con ayuda", font=("Arial", 14)).grid(
+        row=0, column=0, padx=10, pady=5
+    )
+    ttk.Label(main_frame, text="Modo: Sin ayuda", font=("Arial", 14)).grid(
+        row=0, column=1, padx=10, pady=5
+    )
+
+    # Populate rankings
+    for i, record in enumerate(con_ayuda[:10], start=1):  # Top 10 players
+        ttk.Label(main_frame, text=f"{i}. {record['name']} - {record['score']} pts").grid(
+            row=i, column=0, padx=10, pady=2, sticky="w"
+        )
+
+    for i, record in enumerate(sin_ayuda[:10], start=1):  # Top 10 players
+        ttk.Label(main_frame, text=f"{i}. {record['name']} - {record['score']} pts").grid(
+            row=i, column=1, padx=10, pady=2, sticky="w"
+        )
+
+    # Run the GUI loop
+    root.mainloop()
 
 # Interfaz gráfica para seleccionar dificultad y modo
 def start_program():
@@ -198,13 +253,13 @@ def start_program():
     difficulty = difficulty_var.get()
     mode = mode_var.get()
 
-    if difficulty == "Fácil":
+    if difficulty == "Facil":
         MARGIN_OF_ERROR = 20
         TIME_LIMIT = 10
     elif difficulty == "Medio":
         MARGIN_OF_ERROR = 15
         TIME_LIMIT = 7
-    elif difficulty == "Difícil":
+    elif difficulty == "Dificil":
         MARGIN_OF_ERROR = 5
         TIME_LIMIT = 5
 
@@ -217,6 +272,11 @@ def start_program():
     output_folder = "capturas"
     reference_images, reference_angles = load_reference_angles(reference_csv)
     process_video(video_path, reference_images, reference_angles, output_folder)
+    file_path = "records.json"
+    con_ayuda, sin_ayuda = load_and_sort_records(file_path)
+
+    # Display in GUI
+    display_rankings(con_ayuda, sin_ayuda)
 
 root = tk.Tk()
 root.title("Configuración del Juego")
@@ -227,8 +287,8 @@ name_entry = tk.Entry(root, textvariable=name_var)
 name_entry.pack()
 
 tk.Label(root, text="Selecciona la dificultad:").pack()
-difficulty_var = tk.StringVar(value="Fácil")
-difficulty_menu = ttk.Combobox(root, textvariable=difficulty_var, values=["Fácil", "Medio", "Difícil"])
+difficulty_var = tk.StringVar(value="Facil")
+difficulty_menu = ttk.Combobox(root, textvariable=difficulty_var, values=["Facil", "Medio", "Dificil"])
 difficulty_menu.pack()
 
 tk.Label(root, text="Selecciona el modo de juego:").pack()
