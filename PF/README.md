@@ -1,56 +1,100 @@
 # Detección y Comparación de Poses con MediaPipe
 
-## Descripción
+> **Resumen**  
+> Este repositorio reúne un conjunto de scripts en Python que permiten:  
+> 1. **Extraer** ángulos corporales (codos y rodillas) a partir de un video.  
+> 2. **Comparar** dichos ángulos con una referencia.  
+> 3. Ejecutar un **mini-juego** (o comparador interactivo) para verificar poses en tiempo real.  
+> 
+> Se basa en [MediaPipe](https://google.github.io/mediapipe/) para la detección de *landmarks* corporales y [OpenCV](https://opencv.org/) para la lectura y visualización de video.
 
-Este proyecto consiste en un conjunto de scripts en Python que permiten extraer ángulos del cuerpo usando la librería MediaPipe a partir de un video (previamente grabado o captado en vivo), 
-comparar esos ángulos con los de otro video (o con la misma secuencia) y, finalmente, ejecutar un mini-juego (o comparador interactivo) en el que se miden ángulos corporales para verificar
-la ejecución de una rutina, una coreografía o cualquier actividad que implique el seguimiento de una pose.
+---
+
+## Tabla de Contenidos
+1. [Descripción](#descripción)
+2. [Contenido del Repositorio](#contenido-del-repositorio)
+3. [Requisitos Previos](#requisitos-previos)
+4. [Instalación de Dependencias con Anaconda](#instalación-de-dependencias-con-anaconda)
+5. [Guía de Uso de Cada Script](#guía-de-uso-de-cada-script)
+   - [extractVideo.py](#1-extractvideopy)
+   - [compareVideo.py](#2-comparevideopy)
+   - [final_comparator.py](#3-final_comparatorpy)
+6. [Personalización](#personalización)
+7. [Posibles Errores y Soluciones](#posibles-errores-y-soluciones)
+8. [Notas Finales](#notas-finales)
+9. [Autores](#autores)
+
+---
+
+## Descripción
+Este proyecto consiste en un conjunto de scripts en **Python** que:
+- **Extraen** ángulos del cuerpo (codos y rodillas) usando la librería [MediaPipe](https://google.github.io/mediapipe/) a partir de un video (o streaming).
+- **Comparan** dichos ángulos con los de otro video (o la misma secuencia).
+- Ofrecen un **mini-juego** o **comparador interactivo** que mide ángulos corporales para verificar la ejecución de una rutina o actividad de movimiento.
+
+Ejemplos de uso potencial:
+- Evaluación de una coreografía.
+- Seguimiento de rutina de ejercicios.
+- Entrenamiento en artes marciales o deportes.
+
+> **Nota**: Se pueden ajustar varios parámetros (umbrales, rutas de video, etc.) según las necesidades específicas.
 
 ---
 
 ## Contenido del Repositorio
 
-El repositorio incluye los siguientes ficheros:
-- **extractVideo.py**
-  - Extrae los ángulos del cuerpo (codos y rodillas, izquierdo y derecho) de cada fotograma de un video y los guarda en un archivo CSV.
-  - Permite visualizar (de forma opcional) el video con los landmarks de MediaPipe dibujados encima.
-- **compareVideo.py**
-  - Compara los ángulos extraídos de un video (almacenados en angles.csv) con los ángulos de otro video (o el streaming de la webcam).
-  - Calcula y muestra la precisión de la coincidencia fotograma a fotograma.
-  - Genera un archivo CSV con los resultados de la comparación.
-- **final_comparator.py**
-  - Inicia una interfaz gráfica (con tkinter) para:
-    - Seleccionar la dificultad (fácil, medio, difícil).
-    - Escoger el modo de juego (con ayuda o sin ayuda).
-    - Ingresar el nombre del jugador.
-  - Realiza una comparación de ángulos en tiempo real utilizando un video (mix2.mp4 es el nombre por defecto).
-  - Muestra un score (puntaje) y guarda la partida (nombre, puntuación, tiempo jugado y modo/dificultad) en records.json.
-  - Presenta un ranking de los mejores puntajes tras finalizar la ejecución.
+Este repositorio incluye los siguientes ficheros y su propósito:
+
+- **`extractVideo.py`**  
+  - Extrae los ángulos del cuerpo (codos y rodillas, tanto izquierdo como derecho) en cada fotograma de un video y los guarda en un archivo CSV (`angles.csv`).  
+  - Permite visualizar de manera opcional el video con los *landmarks* de MediaPipe dibujados.
+
+- **`compareVideo.py`**  
+  - Compara los ángulos que se hayan extraído (en `angles.csv`) con los de otro video (o streaming de webcam).  
+  - Calcula la precisión de la coincidencia fotograma a fotograma.  
+  - Genera un archivo CSV (`comparison_results.csv`) con el detalle de la comparación y muestra estadísticas globales (precisión de ángulos y de fotogramas).
+
+- **`final_comparator.py`**  
+  - Inicia una interfaz gráfica (con `tkinter`) para seleccionar:  
+    1. **Dificultad** (fácil, medio, difícil).  
+    2. **Modo de juego** (con ayuda o sin ayuda).  
+    3. **Nombre del jugador**.  
+  - Compara ángulos en tiempo real usando un video (`mix2.mp4` por defecto) y muestra un *score* (puntaje).  
+  - Guarda la partida (nombre, puntuación, tiempo jugado, modo, dificultad) en `records.json`.  
+  - Muestra un **ranking** de las mejores puntuaciones al finalizar.
 
 ---
 
 ## Requisitos Previos
 
-- **Python 3.7+.**
-- **Dependencias de Python:**
-  - opencv-python (cv2)
-  - mediapipe
-  - numpy
-  - tkinter (suele venir instalado por defecto con Python; de lo contrario, debe instalarlo según su SO).
-  - Módulos estándar: csv, json, os, time.
-- **Archivos de video:**
-  - Se asume que cuenta con un archivo PF/loveMe.mp4 (o cualquier otro) y/o mix2.mp4. Ajuste las rutas en los scripts para usar tus propios videos.
+- **Python 3.7+** (recomendado 3.8 o superior, manejado con Anaconda).
+- **Dependencias de Python**:
+  - [OpenCV](https://pypi.org/project/opencv-python/) (`cv2`)
+  - [MediaPipe](https://pypi.org/project/mediapipe/)
+  - [NumPy](https://pypi.org/project/numpy/)
+  - [tkinter](https://docs.python.org/3/library/tkinter.html) (suele venir incluido con Python; de lo contrario, revísese la documentación).
+  - Módulos estándar: `csv`, `json`, `os`, `time`.
+
+- **Archivos de video**:  
+  - Por defecto, el proyecto asume la existencia de `PF/loveMe.mp4` y/o `mix2.mp4`. Ajustar las rutas en cada script si se desea usar otros archivos.
 
 ---
 
-## Instalación de dependencias
+## Instalación de Dependencias con Anaconda
 
-Para instalar las principales librerías, si aún no las tiene, ejecute en consola:
-```bash
-pip install opencv-python mediapipe numpy
-```
-> **Nota: En la mayoría de instalaciones de Python en sistemas operativos comunes, tkinter viene incluido. De no ser así, revise la documentación oficial.**
-
+1. **Crear un entorno virtual con Anaconda**  
+   Abra su terminal y ejecuta:
+   ```bash
+   conda create --name mediapipe_env python=3.8
+   conda activate mediapipe_env
+   ```
+2. **Instalar las librerías necesarias**
+   Ejecute los siguientes comandos dentro del entorno virtual:
+   ```bash
+   conda install -c conda-forge opencv
+   pip install mediapipe numpy
+   ```
+   
 ---
 
 ## Guía de Uso de Cada Script
@@ -177,4 +221,6 @@ python final_comparator.py
 - Cualquier cambio en la estructura de los CSV (campos o formato) podría requerir ajustes en el código.
 - El archivo records.json se va acumulando con cada partida nueva. Puede borrarlo si deseas reiniciar el historial.
 
-# Autores: Adrián Talavera Naranjo y Arhamis Gutierrez Caballero
+# Autores 
+- Adrián Talavera Naranjo
+- Arhamis Gutierrez Caballero
