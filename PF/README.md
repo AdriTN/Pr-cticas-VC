@@ -19,7 +19,7 @@
    - [final_comparator.py](#2-final_comparatorpy)  
 6. [Funciones Principales](#funciones-principales)  
    - [final_extract.py](#final_extractpy)  
-   - [final_comparator.py](#final_comparatorpy-1)  
+   - [final_comparator.py](#final_comparatorpy)  
 7. [Personalización](#personalización)  
 8. [Posibles Errores y Soluciones](#posibles-errores-y-soluciones)  
 9. [Notas Finales](#notas-finales)  
