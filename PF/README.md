@@ -98,24 +98,23 @@ Este repositorio incluye los siguientes ficheros y su propósito:
 
 ### 1) `final_extract.py`
 
-Este script lee todas las imágenes en la carpeta posturas (o la que configures) y:
+Este script lee todas las imágenes en la carpeta `posturas` (o la que configures) y:
   - Detecta la pose con MediaPipe.
   - Calcula los ángulos de codos y rodillas (izquierda y derecha).
   - Guarda los resultados en un archivo CSV (`angles.csv`).
 
-Cada fila en el CSV final corresponde a un fotograma del video y contiene:
-  - El número de fotograma (frame).
-  - Los ángulos calculados en ese fotograma (o “&&” si no se pudieron detectar).
+Cada fila en el CSV final corresponde a **una imagen** y contiene:
+  - El nombre de la imagen.
+  - Los ángulos calculados en esa imagen (si no se detectaron landmarks, mostrará un mensaje en consola).
 
 **Uso:**
-1. Abra el archivo extractVideo.py.
-2. Modifique la variable video_path si desea cambiar la ruta del video de origen.
-3. Ajuste la visualización (el script por defecto muestra el video mientras extrae los ángulos).
-4. Ejecute el script:
-  ```bash
-  python extractVideo.py
-  ```
-5. Al finalizar, se genera un archivo angles.csv en el mismo directorio.
+1. Abre el archivo `final_extract.py`.
+2. Modifica la variable `input_folder` si deseas cambiar la carpeta de origen de las imágenes (por defecto, `posturas`).
+3. Ejecuta el script:
+   ```bash
+   python final_extract.py
+   ```
+4. Al finalizar, se genera un archivo angles.csv en el mismo directorio.
 
 **Resultado:**
 - Se genera el fichero angles.csv con la estructura:
@@ -168,6 +167,95 @@ Permite:
   - `records.json`: Almacena los registros (nombre, score, tiempo, dificultad y modo).
   - `capturas/`: Carpeta donde se guardan capturas de pantalla cuando el usuario acierta una pose.
   - `diferencias.csv`: Guarda la diferencia en ángulos para cada fotograma.
+
+---
+
+## Funciones Principales
+
+### `final_extract.py`
+
+#### `calculate_angle(a, b, c)`
+- **Objetivo**: Calcular el ángulo entre tres puntos (A, B, C).  
+- **Uso principal**: Se utiliza para determinar la inclinación de codos y rodillas a partir de las coordenadas (x, y) de cada *landmark*.  
+- **Parámetros**:  
+  - `a`: Coordenadas del primer punto (ej. hombro).  
+  - `b`: Coordenadas del punto central (ej. codo).  
+  - `c`: Coordenadas del tercer punto (ej. muñeca).  
+- **Devuelve**: Un valor en grados (float) con el ángulo calculado.
+
+#### Bucle principal
+- **Flujo general**:  
+  1. Lee todas las imágenes de la carpeta (`posturas` por defecto).  
+  2. Para cada imagen, usa MediaPipe Pose para detectar los landmarks.  
+  3. Llama a `calculate_angle()` para codo izquierdo, codo derecho, rodilla izquierda y rodilla derecha.  
+  4. Almacena los resultados en `angles.csv` (columnas: `Image, Left Elbow, Right Elbow, Left Knee, Right Knee`).  
+
+---
+
+### `final_comparator.py`
+
+#### `calculate_angle(a, b, c)`
+- **Objetivo**: Mismo propósito que en `final_extract.py`, pero en el flujo de procesamiento de video.  
+- **Uso principal**: Calcular el ángulo de cada articulación (codo, rodilla) en tiempo real o en cada fotograma del video.
+
+#### `load_reference_angles(csv_file)`
+- **Objetivo**: Cargar los ángulos de referencia desde un CSV (por defecto, `angles.csv`).  
+- **Contenido**:
+  - Primera columna: rutas de imágenes de referencia.  
+  - Siguientes columnas: ángulos de codos y rodillas.  
+- **Devuelve**:
+  - `images`: Lista de rutas/nombres de imágenes.  
+  - `reference_angles`: Lista de listas con los ángulos correspondientes a cada imagen.
+
+#### `calculate_differences(reference_angles, current_angles)`
+- **Objetivo**: Calcular la diferencia entre los ángulos de referencia y los ángulos actuales.  
+- **Flujo**:
+  1. Calcula la diferencia absoluta para cada ángulo.  
+  2. Verifica si está dentro de un margen de error (`MARGIN_OF_ERROR`).  
+- **Devuelve**:
+  - `differences`: Lista de diferencias numéricas (float).  
+  - `results`: Lista booleana indicando si cada ángulo coincide o no.
+
+#### `save_record(player_name, score, difficulty)`
+- **Objetivo**: Guardar en `records.json` (formato JSON) la información de la partida.  
+- **Campos**:  
+  - `name`, `score`, `time_played`, `mode`, `difficulty`.
+
+#### `process_video(video_path, reference_images, reference_angles, output_folder)`
+- **Objetivo**: Procesar un video para comparar pose por pose con las referencias.  
+- **Pasos principales**:
+  1. Inicializa la captura de video con OpenCV.  
+  2. Detecta la pose en cada fotograma con MediaPipe Pose.  
+  3. Llama a `calculate_differences(...)` para comparar contra la referencia actual.  
+  4. Si se cumple la pose, aumenta `score`, guarda captura y pasa a la siguiente pose.  
+  5. Maneja el tiempo límite (`TIME_LIMIT`).  
+  6. Al finalizar, llama a `save_record(...)` para guardar los resultados.
+
+#### `load_and_sort_records(file_path)`
+- **Objetivo**: Cargar `records.json` y separar registros según modo (Con ayuda / Sin ayuda).  
+- **Flujo**:
+  - Ordena los registros por puntuación (score).  
+- **Devuelve**:
+  - Dos listas (`con_ayuda`, `sin_ayuda`) con los registros ordenados de mayor a menor score.
+
+#### `display_rankings(con_ayuda, sin_ayuda)`
+- **Objetivo**: Mostrar en una ventana `tkinter` el ranking de los mejores puntajes.  
+- **Flujo**:
+  - Dos columnas: Con ayuda y Sin ayuda.  
+  - Muestra los top 10 de cada modalidad.
+
+#### `start_program()`
+- **Objetivo**: Función que se llama al pulsar **Iniciar** en la interfaz.  
+- **Flujo**:
+  1. Toma el nombre, dificultad, modo.  
+  2. Ajusta `MARGIN_OF_ERROR` y `TIME_LIMIT`.  
+  3. Cierra la ventana de configuración.  
+  4. Carga `angles.csv` con `load_reference_angles()`.  
+  5. Ejecuta `process_video()`.  
+  6. Carga los registros y muestra el ranking.
+
+#### Interfaz gráfica (Ventana principal `tkinter`)
+- **Objetivo**: Capturar la información de la partida (nombre, dificultad, modo) y llamar a `start_program()`.
 
 ---
 
