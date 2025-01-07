@@ -17,10 +17,13 @@
 5. [Guía de Uso de Cada Script](#guía-de-uso-de-cada-script)  
    - [final_extract.py](#1-final_extractpy)  
    - [final_comparator.py](#2-final_comparatorpy)  
-6. [Personalización](#personalización)  
-7. [Posibles Errores y Soluciones](#posibles-errores-y-soluciones)  
-8. [Notas Finales](#notas-finales)  
-9. [Autores](#autores)  
+6. [Funciones Principales](#funciones-principales)  
+   - [final_extract.py](#final_extractpy)  
+   - [final_comparator.py](#final_comparatorpy-1)  
+7. [Personalización](#personalización)  
+8. [Posibles Errores y Soluciones](#posibles-errores-y-soluciones)  
+9. [Notas Finales](#notas-finales)  
+10. [Autores](#autores) 
 
 ---
 
