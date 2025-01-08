@@ -131,40 +131,38 @@ Cada fila en el CSV final corresponde a **una imagen** y contiene:
 ---
 
 ### 2) `final_comparator.py`
-Este script es un mini-juego o comparador interactivo con interfaz de usuario en tkinter.
+Este script es un mini-juego o comparador interactivo con interfaz de usuario en `tkinter`.
 Permite:
 1. Elegir el nombre del jugador.
-2. Seleccionar dificultad (Fácil, Medio, Difícil) — esto ajusta el margen de error (±20°, ±15°, ±5°) y el tiempo límite para mantener cada pose.
-3. Seleccionar el modo (Con ayuda/Sin ayuda) — si se elige “Con ayuda”, los landmarks que no coinciden se pintan en rojo para guiar al usuario.
+2. Seleccionar dificultad (Fácil, Medio, Difícil) — esto ajusta el margen de error y el tiempo límite para mantener cada pose.
+3. Seleccionar el modo (Con ayuda / Sin ayuda) — si se elige “Con ayuda”, los landmarks que no coinciden se pintan en rojo para guiar al usuario.
 
 **Funcionamiento:**
-  - Lee un archivo CSV de referencia (por defecto, angles.csv) que contiene una lista de fotogramas (aunque en este caso, el script asume que en la primera columna están rutas de imágenes de referencia y en las siguientes columnas, los ángulos, pero puede personalizarlo).
-  - Usa un video (mix2.mp4) para detectar la pose del usuario en tiempo real (cada fotograma del video).
-  - Compara los ángulos calculados con los ángulos de referencia actuales.
-  - Cuando todos los ángulos caen dentro del margen de error, se sube la puntuación (score) en +1, se captura la imagen resultante y se avanza a la siguiente pose de referencia.
-  - Hay un tiempo límite (en segundos) para lograr cada pose. Si se acaba el tiempo, avanza automáticamente a la siguiente pose.
-  - Al final, guarda el registro en records.json, con el nombre, puntuación, tiempo jugado y modo.
-  - Muestra un ranking de los 10 primeros puntajes en modo “Con ayuda” y en modo “Sin ayuda”.
+  - Lee un archivo CSV de referencia (por defecto, `angles.csv`) que contiene la lista de imágenes y ángulos de codos/rodillas extraídos con `final_extract.py`.  
+  - **Abre la cámara web** (por defecto la webcam del sistema, índice `0`) para detectar la pose del usuario en tiempo real (cada fotograma).  
+  - Compara los ángulos calculados con los de la imagen de referencia actual.  
+  - Cuando se acierta la pose (todos los ángulos dentro del margen), sube el *score* (+1) y se pasa a la siguiente pose.  
+  - Hay un tiempo límite que depende de la dificultad:
+    - **Fácil**: ±20° de margen, 20s para cada pose.
+    - **Medio**: ±15° de margen, 15s para cada pose.
+    - **Difícil**: ±5° de margen, 10s para cada pose.
+  - Al final, se guarda el registro en `records.json` (nombre, puntuación, tiempo jugado, modo, dificultad) y se muestra un ranking de los 10 primeros puntajes.
 
 **Uso:**
-1. Ejecute:
-  ```bash
-  python final_comparator.py
-  ```
-2. En la ventana emergente:
-  - Ingrese su nombre (opcional, si no, usará “test”).
-  - Seleccione la dificultad (Fácil, Medio, Difícil).
-  - Seleccione el modo (Con ayuda, Sin ayuda).
-  - Pulse Iniciar.
-3. Tras esto, se abre la ventana de OpenCV con el video mix2.mp4.
-4. Verá un recuadro con la imagen de referencia (pose objetivo) y el tiempo restante para igualar la pose.
-5. Si está en “Con ayuda”, podrá ver en verde los landmarks correctos y en rojo los incorrectos.
-6. Una vez termine todas las poses o se acabe el video, aparecerá la ventana con el ranking de puntuaciones.
-
-**Parámetros:**
-  - `MARGIN_OF_ERROR`: Se ajusta según la dificultad.
-  - `MODE_HELP`: Se activa si se selecciona “Con ayuda”.
-  - `TIME_LIMIT`: Tiempo en segundos para mantener la pose antes de pasar a la siguiente.
+1. Asegúrate de contar con una webcam disponible (o modifica `cap = cv2.VideoCapture(0)` si usas otra fuente de video).
+2. Ejecuta:
+   ```bash
+   python final_comparator.py
+   ```
+3. En la ventana emergente:
+   - Ingresa tu nombre (opcional; si no, se usa “test”).
+   - Selecciona la dificultad (Fácil, Medio, Difícil).
+   - Selecciona el modo (Con ayuda / Sin ayuda).
+   - Pulsa Iniciar.
+4. Se abrirá la ventana de OpenCV con la captura de la webcam.
+5. Verás un recuadro con la imagen de referencia (pose objetivo) y el tiempo restante para igualarla.
+6. Si estás en “Con ayuda”, las articulaciones correctas se marcan en verde y las incorrectas en rojo.
+7. Una vez termines todas las poses (o cierres la ventana), aparecerá la ventana con el ranking de puntuaciones.
 
 **Archivos generados:**
   - `records.json`: Almacena los registros (nombre, score, tiempo, dificultad y modo).
@@ -223,16 +221,6 @@ Permite:
 - **Objetivo**: Guardar en `records.json` (formato JSON) la información de la partida.  
 - **Campos**:  
   - `name`, `score`, `time_played`, `mode`, `difficulty`.
-
-#### `process_video(video_path, reference_images, reference_angles, output_folder)`
-- **Objetivo**: Procesar un video para comparar pose por pose con las referencias.  
-- **Pasos principales**:
-  1. Inicializa la captura de video con OpenCV.  
-  2. Detecta la pose en cada fotograma con MediaPipe Pose.  
-  3. Llama a `calculate_differences(...)` para comparar contra la referencia actual.  
-  4. Si se cumple la pose, aumenta `score`, guarda captura y pasa a la siguiente pose.  
-  5. Maneja el tiempo límite (`TIME_LIMIT`).  
-  6. Al finalizar, llama a `save_record(...)` para guardar los resultados.
 
 #### `load_and_sort_records(file_path)`
 - **Objetivo**: Cargar `records.json` y separar registros según modo (Con ayuda / Sin ayuda).  
