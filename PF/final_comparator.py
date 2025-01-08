@@ -258,14 +258,14 @@ def start_program():
     mode = mode_var.get()
 
     if difficulty == "Facil":
-        MARGIN_OF_ERROR = 15
+        MARGIN_OF_ERROR = 20
         TIME_LIMIT = 20
     elif difficulty == "Medio":
         MARGIN_OF_ERROR = 15
-        TIME_LIMIT = 7
+        TIME_LIMIT = 15
     elif difficulty == "Dificil":
         MARGIN_OF_ERROR = 5
-        TIME_LIMIT = 5
+        TIME_LIMIT = 10
 
     MODE_HELP = True if mode == "Con ayuda" else False
     START_TIME = time.time()
